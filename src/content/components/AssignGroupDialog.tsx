@@ -3,7 +3,7 @@ import { DiamondPlus, X } from "lucide-react";
 import type { ChannelId, GroupId, IGroup } from "../../shared/types";
 import { GroupForm } from "./GroupForm";
 
-const DIALOG_TITLE_ID = "grouptube-assign-group-dialog-title";
+const DIALOG_TITLE_ID = "YouBunch-assign-group-dialog-title";
 
 export type SubscribedChannelInfo = {
   channelId: ChannelId;
@@ -96,27 +96,27 @@ export function AssignGroupDialog({
 
   return (
     <div
-      className="grouptube-overlay"
+      className="YouBunch-overlay"
       onClick={handleOverlayClick}
       onKeyDown={handleModalKeyDown}
       onKeyUp={handleModalKeyUp}
       role="presentation"
     >
       <div
-        className="grouptube-modal grouptube-assign-modal"
+        className="YouBunch-modal YouBunch-assign-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby={DIALOG_TITLE_ID}
       >
-        <div className="grouptube-modal-header">
-          <h2 id={DIALOG_TITLE_ID} className="grouptube-modal-title">
+        <div className="YouBunch-modal-header">
+          <h2 id={DIALOG_TITLE_ID} className="YouBunch-modal-title">
             {labels.title}
           </h2>
-          <div className="grouptube-modal-header-actions">
+          <div className="YouBunch-modal-header-actions">
             <button
               type="button"
               aria-label={labels.closeLabel}
-              className="grouptube-icon-button"
+              className="YouBunch-icon-button"
               onClick={onClose}
               disabled={isBusy}
             >
@@ -125,38 +125,38 @@ export function AssignGroupDialog({
           </div>
         </div>
 
-        <div className="grouptube-modal-body">
-          <div className="grouptube-assign-channel">
-            <span className="grouptube-assign-channel-avatar" aria-hidden="true">
+        <div className="YouBunch-modal-body">
+          <div className="YouBunch-assign-channel">
+            <span className="YouBunch-assign-channel-avatar" aria-hidden="true">
               {channel.thumbnailUrl ? (
                 <img src={channel.thumbnailUrl} alt="" referrerPolicy="no-referrer" />
               ) : null}
             </span>
-            <span className="grouptube-assign-channel-name" title={channel.name}>
+            <span className="YouBunch-assign-channel-name" title={channel.name}>
               {channel.name}
             </span>
           </div>
 
-          <p className="grouptube-assign-description">{labels.description}</p>
+          <p className="YouBunch-assign-description">{labels.description}</p>
 
           {groups.length > 0 ? (
-            <div className="grouptube-assign-group-list">
+            <div className="YouBunch-assign-group-list">
               {groups.map((group) => (
                 <button
                   key={group.id}
                   type="button"
-                  className="grouptube-assign-group-item"
+                  className="YouBunch-assign-group-item"
                   disabled={isBusy}
                   onClick={() => {
                     void handleAssignExisting(group.id);
                   }}
                 >
                   <span
-                    className="grouptube-assign-group-item-color"
+                    className="YouBunch-assign-group-item-color"
                     style={{ backgroundColor: group.color }}
                     aria-hidden="true"
                   />
-                  <span className="grouptube-assign-group-item-name">{group.name}</span>
+                  <span className="YouBunch-assign-group-item-name">{group.name}</span>
                 </button>
               ))}
             </div>
@@ -181,7 +181,7 @@ export function AssignGroupDialog({
           ) : (
             <button
               type="button"
-              className="grouptube-button grouptube-assign-create-toggle"
+              className="YouBunch-button YouBunch-assign-create-toggle"
               onClick={() => setIsCreateOpen(true)}
               disabled={isBusy}
             >
@@ -190,10 +190,10 @@ export function AssignGroupDialog({
             </button>
           )}
 
-          <div className="grouptube-assign-actions">
+          <div className="YouBunch-assign-actions">
             <button
               type="button"
-              className="grouptube-button"
+              className="YouBunch-button"
               onClick={onClose}
               disabled={isBusy}
             >

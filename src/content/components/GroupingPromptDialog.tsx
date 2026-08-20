@@ -20,7 +20,7 @@ type GroupingPromptDialogProps = {
   onClose: () => void;
 };
 
-const PROMPT_DIALOG_TITLE_ID = "grouptube-grouping-prompt-title";
+const PROMPT_DIALOG_TITLE_ID = "YouBunch-grouping-prompt-title";
 
 export function GroupingPromptDialog({
   isOpen,
@@ -74,39 +74,39 @@ export function GroupingPromptDialog({
 
   return (
     <div
-      className="grouptube-prompt-overlay"
+      className="YouBunch-prompt-overlay"
       onClick={onOverlayClick}
       onKeyDown={onOverlayKeyDown}
       onKeyUp={onOverlayKeyUp}
       role="presentation"
     >
-      <div className="grouptube-prompt-dialog" role="dialog" aria-modal="true" aria-labelledby={PROMPT_DIALOG_TITLE_ID}>
-        <div className="grouptube-prompt-header">
-          <h3 id={PROMPT_DIALOG_TITLE_ID} className="grouptube-prompt-title">
+      <div className="YouBunch-prompt-dialog" role="dialog" aria-modal="true" aria-labelledby={PROMPT_DIALOG_TITLE_ID}>
+        <div className="YouBunch-prompt-header">
+          <h3 id={PROMPT_DIALOG_TITLE_ID} className="YouBunch-prompt-title">
             {labels.title}
           </h3>
-          <button type="button" className="grouptube-icon-button" aria-label={labels.closeLabel} onClick={onClose}>
+          <button type="button" className="YouBunch-icon-button" aria-label={labels.closeLabel} onClick={onClose}>
             <X size={20} strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
 
-        <div className="grouptube-prompt-body">
-          <p className="grouptube-info-text">{labels.description}</p>
+        <div className="YouBunch-prompt-body">
+          <p className="YouBunch-info-text">{labels.description}</p>
 
           <textarea
-            className="grouptube-prompt-textarea"
+            className="YouBunch-prompt-textarea"
             readOnly
             value={prompt}
             aria-label={labels.promptFieldLabel}
           />
 
-          <div className="grouptube-inline-actions grouptube-prompt-actions">
-            <button type="button" className="grouptube-button is-primary" onClick={copyPrompt}>
+          <div className="YouBunch-inline-actions YouBunch-prompt-actions">
+            <button type="button" className="YouBunch-button is-primary" onClick={copyPrompt}>
               {copyStatus === "copied" ? labels.copiedLabel : labels.copyLabel}
             </button>
           </div>
 
-          {copyStatus === "error" ? <p className="grouptube-info-text">{labels.copyErrorLabel}</p> : null}
+          {copyStatus === "error" ? <p className="YouBunch-info-text">{labels.copyErrorLabel}</p> : null}
         </div>
       </div>
     </div>

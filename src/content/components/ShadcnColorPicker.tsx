@@ -45,19 +45,19 @@ export function ShadcnColorPicker({ value, onChange, disabled, "aria-label": ari
       <PopoverTrigger asChild disabled={disabled}>
         <button
           type="button"
-          className="grouptube-color-picker-trigger"
+          className="YouBunch-color-picker-trigger"
           style={{ backgroundColor: displayColor }}
           aria-label={ariaLabel}
         />
       </PopoverTrigger>
       <PopoverContent
         container={portalContainer ?? undefined}
-        className="grouptube-color-picker-popover"
+        className="YouBunch-color-picker-popover"
       >
-        <div className="grouptube-shadcn-color-picker-panel">
+        <div className="YouBunch-shadcn-color-picker-panel">
           <HexColorPicker color={pickerColor} onChange={(next) => onChange(next.toLowerCase())} />
           <input
-            className="grouptube-input grouptube-color-picker-hex-input"
+            className="YouBunch-input YouBunch-color-picker-hex-input"
             type="text"
             autoComplete="off"
             spellCheck={false}

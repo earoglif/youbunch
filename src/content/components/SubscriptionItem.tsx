@@ -24,24 +24,24 @@ export function SubscriptionItem({ subscription, groupId, dragHandleLabel }: Sub
   };
 
   return (
-    <div ref={setNodeRef} className={`grouptube-subscription-item${isDragging ? " is-dragging" : ""}`} style={style}>
-      <button type="button" className="grouptube-drag-handle" aria-label={dragHandleLabel} {...attributes} {...listeners}>
+    <div ref={setNodeRef} className={`YouBunch-subscription-item${isDragging ? " is-dragging" : ""}`} style={style}>
+      <button type="button" className="YouBunch-drag-handle" aria-label={dragHandleLabel} {...attributes} {...listeners}>
         ≡
       </button>
-      <span className="grouptube-subscription-avatar-wrap" aria-hidden="true">
+      <span className="YouBunch-subscription-avatar-wrap" aria-hidden="true">
         {subscription.thumbnailUrl ? (
           <img
-            className="grouptube-subscription-avatar"
+            className="YouBunch-subscription-avatar"
             src={subscription.thumbnailUrl}
             alt=""
             loading="lazy"
             referrerPolicy="no-referrer"
           />
         ) : (
-          <span className="grouptube-subscription-avatar-fallback" />
+          <span className="YouBunch-subscription-avatar-fallback" />
         )}
       </span>
-      <span className="grouptube-subscription-name">{subscription.name}</span>
+      <span className="YouBunch-subscription-name">{subscription.name}</span>
     </div>
   );
 }

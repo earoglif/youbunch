@@ -1,6 +1,8 @@
-# GroupTube
+# YouBunch
 
-GroupTube is a Chrome extension for organizing YouTube subscriptions into custom groups directly inside the YouTube interface.
+YouBunch is a Chrome extension for organizing YouTube subscriptions into custom groups directly inside the YouTube interface.
+
+Repository: [github.com/earoglif/youbunch](https://github.com/earoglif/youbunch)
 
 ## Features
 

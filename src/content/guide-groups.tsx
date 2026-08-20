@@ -15,9 +15,9 @@ import { t } from "./i18n";
 import { sortSubscriptions } from "./services/sort-subscriptions";
 import { loadSubscriptionSort, type SubscriptionSortMode } from "./services/subscription-sort";
 
-const GROUPS_SECTION_ID = "grouptube-groups-section";
-const GROUPS_SECTION_STYLE_ID = "grouptube-groups-section-styles";
-const GROUPS_SECTION_ROOT_ID = "grouptube-groups-section-root";
+const GROUPS_SECTION_ID = "YouBunch-groups-section";
+const GROUPS_SECTION_STYLE_ID = "YouBunch-groups-section-styles";
+const GROUPS_SECTION_ROOT_ID = "YouBunch-groups-section-root";
 const GUIDE_COLLAPSED_GROUPS_STORAGE_PREFIX = STORAGE_KEYS.guideCollapsedPrefix;
 const GUIDE_SUBSCRIPTION_SORT_STORAGE_PREFIX = STORAGE_KEYS.guideSortPrefix;
 

@@ -27,7 +27,7 @@ export function GroupList({
 }: GroupListProps) {
   return (
     <SortableContext items={groups.map((group) => getGroupDragId(group.id))} strategy={verticalListSortingStrategy}>
-      <div className="grouptube-group-list">
+      <div className="YouBunch-group-list">
         {groups.map((group) => (
           <GroupCard
             key={group.id}

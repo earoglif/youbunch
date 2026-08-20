@@ -5,7 +5,7 @@ import { PAGE_BRIDGE_EVENTS } from "./page-bridge";
 export type SubscribeWatcherCallback = (channelId: ChannelId) => void;
 export type UnsubscribeWatcherCallback = (channelIds: ChannelId[]) => void;
 
-const DEBUG_PREFIX = "[grouptube/subscribe-watcher]";
+const DEBUG_PREFIX = "[YouBunch/subscribe-watcher]";
 
 function readChannelIds(detail: unknown): ChannelId[] {
   const ids = (detail as { channelIds?: unknown } | undefined)?.channelIds;

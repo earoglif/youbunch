@@ -189,23 +189,23 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
   };
 
   return (
-    <div className="grouptube-modal-body">
-      <div className="grouptube-toolbar">
+    <div className="YouBunch-modal-body">
+      <div className="YouBunch-toolbar">
         <button
           type="button"
-          className="grouptube-button is-primary grouptube-new-group-button"
+          className="YouBunch-button is-primary YouBunch-new-group-button"
           onClick={() => setIsCreateGroupOpen(true)}
         >
           <DiamondPlus size={24} strokeWidth={2} aria-hidden="true" />
           {labels.newGroupLabel}
         </button>
-        <div className="grouptube-toolbar-end">
-          <label className="grouptube-toolbar-select-wrap" title={labels.sortLabel}>
-            <span className="grouptube-toolbar-select-label" aria-hidden="true">
+        <div className="YouBunch-toolbar-end">
+          <label className="YouBunch-toolbar-select-wrap" title={labels.sortLabel}>
+            <span className="YouBunch-toolbar-select-label" aria-hidden="true">
               <ArrowDownUp size={18} strokeWidth={2} />
             </span>
             <select
-              className="grouptube-toolbar-select"
+              className="YouBunch-toolbar-select"
               aria-label={labels.sortLabel}
               value={sortMode}
               onChange={(event) => {
@@ -222,7 +222,7 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
           {!isLoading && groups.length > 0 ? (
             <button
               type="button"
-              className="grouptube-icon-button"
+              className="YouBunch-icon-button"
               aria-label={allGroupsCollapsed ? labels.expandAllGroupsLabel : labels.collapseAllGroupsLabel}
               title={allGroupsCollapsed ? labels.expandAllGroupsLabel : labels.collapseAllGroupsLabel}
               onClick={handleCollapseExpandAll}
@@ -256,8 +256,8 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
       ) : null}
 
       {isLoading ? (
-        <div className="grouptube-loading" role="status" aria-live="polite">
-          <LoaderCircle className="grouptube-loading-icon" aria-hidden="true" />
+        <div className="YouBunch-loading" role="status" aria-live="polite">
+          <LoaderCircle className="YouBunch-loading-icon" aria-hidden="true" />
           <span>{labels.loadingLabel}</span>
         </div>
       ) : null}
@@ -268,7 +268,7 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
         modifiers={modifiers}
         onDragEnd={handleDragEnd}
       >
-        <div className="grouptube-modal-dnd">
+        <div className="YouBunch-modal-dnd">
           {groups.length > 0 ? (
             <GroupList
               groups={groups}
@@ -300,7 +300,7 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
               }}
             />
           ) : (
-            <p className="grouptube-info-text">{labels.noGroupsLabel}</p>
+            <p className="YouBunch-info-text">{labels.noGroupsLabel}</p>
           )}
 
           <SubscriptionList

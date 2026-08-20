@@ -1,7 +1,7 @@
 import { PAGE_BRIDGE_EVENTS } from "../shared/page-bridge/events";
 import { logger } from "../shared/logger";
 
-const INSTALL_FLAG = "__grouptubePageBridgeInstalled__";
+const INSTALL_FLAG = "__YouBunchPageBridgeInstalled__";
 const EVENT_USER_INFO = PAGE_BRIDGE_EVENTS.userInfo;
 const EVENT_REQUEST_USER_INFO = PAGE_BRIDGE_EVENTS.requestUserInfo;
 const EVENT_SUBSCRIPTION_SUBSCRIBE = PAGE_BRIDGE_EVENTS.subscriptionSubscribe;
@@ -9,16 +9,16 @@ const EVENT_SUBSCRIPTION_UNSUBSCRIBE = PAGE_BRIDGE_EVENTS.subscriptionUnsubscrib
 
 const SUBSCRIBE_URL_MARKER = "/youtubei/v1/subscription/subscribe";
 const UNSUBSCRIBE_URL_MARKER = "/youtubei/v1/subscription/unsubscribe";
-const DEBUG_PREFIX = "[grouptube/page-script]";
+const DEBUG_PREFIX = "[YouBunch/page-script]";
 const CHANNEL_IDS_ARRAY_REGEX = /"channelIds"\s*:\s*\[(.*?)\]/s;
 const CHANNEL_ID_IN_ARRAY_REGEX = /"(UC[a-zA-Z0-9_-]{20,})"/g;
 const SINGLE_CHANNEL_ID_REGEX = /"channelId"\s*:\s*"(UC[a-zA-Z0-9_-]{20,})"/;
 type SubscribeRequestInput = Parameters<typeof fetch>[0];
 type SubscribeRequestInit = Parameters<typeof fetch>[1];
 type XhrWithSubscribeUrl = XMLHttpRequest & {
-  __grouptubeSubscribeUrl?: string;
-  __grouptubeSubscriptionEventName?: string;
-  __grouptubeSubscriptionChannelIds?: string[];
+  __YouBunchSubscribeUrl?: string;
+  __YouBunchSubscriptionEventName?: string;
+  __YouBunchSubscriptionChannelIds?: string[];
 };
 
 function getYtData() {
@@ -381,15 +381,15 @@ function installSubscribeRequestBridge() {
   ) {
     const xhr = this as XhrWithSubscribeUrl;
     try {
-      xhr.__grouptubeSubscribeUrl = typeof url === "string" ? url : "";
-      xhr.__grouptubeSubscriptionEventName = undefined;
-      xhr.__grouptubeSubscriptionChannelIds = undefined;
+      xhr.__YouBunchSubscribeUrl = typeof url === "string" ? url : "";
+      xhr.__YouBunchSubscriptionEventName = undefined;
+      xhr.__YouBunchSubscriptionChannelIds = undefined;
       if (
-        typeof xhr.__grouptubeSubscribeUrl === "string" &&
-        (xhr.__grouptubeSubscribeUrl.includes(SUBSCRIBE_URL_MARKER) ||
-          xhr.__grouptubeSubscribeUrl.includes(UNSUBSCRIBE_URL_MARKER))
+        typeof xhr.__YouBunchSubscribeUrl === "string" &&
+        (xhr.__YouBunchSubscribeUrl.includes(SUBSCRIBE_URL_MARKER) ||
+          xhr.__YouBunchSubscribeUrl.includes(UNSUBSCRIBE_URL_MARKER))
       ) {
-        logger.debug(`${DEBUG_PREFIX} xhr subscription open`, { method, url: xhr.__grouptubeSubscribeUrl });
+        logger.debug(`${DEBUG_PREFIX} xhr subscription open`, { method, url: xhr.__YouBunchSubscribeUrl });
       }
     } catch {}
 
@@ -407,7 +407,7 @@ function installSubscribeRequestBridge() {
     const [body] = args;
     const xhr = this as XhrWithSubscribeUrl;
     try {
-      const url = xhr.__grouptubeSubscribeUrl || "";
+      const url = xhr.__YouBunchSubscribeUrl || "";
       if (typeof url === "string" && (url.includes(SUBSCRIBE_URL_MARKER) || url.includes(UNSUBSCRIBE_URL_MARKER))) {
         const eventName = url.includes(UNSUBSCRIBE_URL_MARKER)
           ? EVENT_SUBSCRIPTION_UNSUBSCRIBE
@@ -416,8 +416,8 @@ function installSubscribeRequestBridge() {
         logger.debug(`${DEBUG_PREFIX} xhr parsed channelIds`, { channelIds, bodyType: typeof body });
 
         if (eventName === EVENT_SUBSCRIPTION_UNSUBSCRIBE) {
-          xhr.__grouptubeSubscriptionEventName = eventName;
-          xhr.__grouptubeSubscriptionChannelIds = channelIds;
+          xhr.__YouBunchSubscriptionEventName = eventName;
+          xhr.__YouBunchSubscriptionChannelIds = channelIds;
           xhr.addEventListener(
             "loadend",
             () => {
@@ -425,7 +425,7 @@ function installSubscribeRequestBridge() {
                 logger.debug(`${DEBUG_PREFIX} xhr unsubscribe failed`, { status: xhr.status });
                 return;
               }
-              emitSubscriptionEvent(EVENT_SUBSCRIPTION_UNSUBSCRIBE, xhr.__grouptubeSubscriptionChannelIds ?? []);
+              emitSubscriptionEvent(EVENT_SUBSCRIPTION_UNSUBSCRIBE, xhr.__YouBunchSubscriptionChannelIds ?? []);
             },
             { once: true }
           );

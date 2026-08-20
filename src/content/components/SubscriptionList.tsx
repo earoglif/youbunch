@@ -19,9 +19,9 @@ export function SubscriptionList({ title, emptyLabel, dragSubscriptionLabel, sub
   const isSubscriptionOver = isOver && active?.data.current?.kind === "subscription";
 
   return (
-    <section ref={setNodeRef} className={`grouptube-ungrouped${isSubscriptionOver ? " is-over" : ""}`}>
-      <h3 className="grouptube-ungrouped-title">{title}</h3>
-      <div className="grouptube-ungrouped-list">
+    <section ref={setNodeRef} className={`YouBunch-ungrouped${isSubscriptionOver ? " is-over" : ""}`}>
+      <h3 className="YouBunch-ungrouped-title">{title}</h3>
+      <div className="YouBunch-ungrouped-list">
         {subscriptions.length > 0 ? (
           subscriptions.map((subscription) => (
             <SubscriptionItem
@@ -32,7 +32,7 @@ export function SubscriptionList({ title, emptyLabel, dragSubscriptionLabel, sub
             />
           ))
         ) : (
-          <p className="grouptube-empty-text">{emptyLabel}</p>
+          <p className="YouBunch-empty-text">{emptyLabel}</p>
         )}
       </div>
     </section>

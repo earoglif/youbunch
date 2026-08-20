@@ -53,7 +53,7 @@ function downloadJsonFile(payload: unknown): void {
   const link = document.createElement("a");
 
   link.href = url;
-  link.download = `grouptube-backup-${getFileNameDatePart()}.json`;
+  link.download = `YouBunch-backup-${getFileNameDatePart()}.json`;
   document.body.append(link);
   link.click();
   link.remove();

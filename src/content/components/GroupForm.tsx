@@ -47,8 +47,8 @@ export function GroupForm({ mode, labels, initialName, initialColor, onSubmit, o
   };
 
   return (
-    <form className="grouptube-group-form" onSubmit={handleSubmit}>
-      <div className="grouptube-group-form-name-row">
+    <form className="YouBunch-group-form" onSubmit={handleSubmit}>
+      <div className="YouBunch-group-form-name-row">
         <ShadcnColorPicker
           value={color}
           onChange={setColor}
@@ -56,18 +56,18 @@ export function GroupForm({ mode, labels, initialName, initialColor, onSubmit, o
           aria-label={labels.colorPickerLabel}
         />
         <input
-          className="grouptube-input grouptube-group-form-name-input"
+          className="YouBunch-input YouBunch-group-form-name-input"
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder={labels.namePlaceholder}
           maxLength={40}
         />
       </div>
-      <div className="grouptube-inline-actions">
-        <button type="submit" className="grouptube-button is-primary" disabled={!name.trim() || isSubmitting}>
+      <div className="YouBunch-inline-actions">
+        <button type="submit" className="YouBunch-button is-primary" disabled={!name.trim() || isSubmitting}>
           {submitLabel}
         </button>
-        <button type="button" className="grouptube-button" onClick={onCancel} disabled={isSubmitting}>
+        <button type="button" className="YouBunch-button" onClick={onCancel} disabled={isSubmitting}>
           {labels.cancelLabel}
         </button>
       </div>

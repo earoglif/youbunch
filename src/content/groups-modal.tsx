@@ -10,10 +10,10 @@ import { ModalPortalContainerContext } from "./modal-portal-context";
 import { useSubscriptions } from "./hooks/useSubscriptions";
 import { exportGroups, importGroups } from "../shared/services/import-export";
 
-const MODAL_TITLE_ID = "grouptube-manage-groups-modal-title";
-const MODAL_HOST_ID = "grouptube-modal-host";
-const MODAL_ROOT_ID = "grouptube-modal-root";
-const MODAL_STYLE_ID = "grouptube-modal-styles";
+const MODAL_TITLE_ID = "YouBunch-manage-groups-modal-title";
+const MODAL_HOST_ID = "YouBunch-modal-host";
+const MODAL_ROOT_ID = "YouBunch-modal-root";
+const MODAL_STYLE_ID = "YouBunch-modal-styles";
 
 export type GroupsModalLabels = ModalBodyLabels & {
   closeLabel: string;
@@ -109,13 +109,13 @@ function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: Groups
   return createPortal(
     <ModalPortalContainerContext.Provider value={portalRoot}>
       <div
-        className="grouptube-overlay"
+        className="YouBunch-overlay"
         onClick={onOverlayClick}
         onKeyDown={onOverlayKeyDown}
         onKeyUp={onOverlayKeyUp}
         role="presentation"
       >
-        <div className="grouptube-modal" role="dialog" aria-modal="true" aria-labelledby={MODAL_TITLE_ID}>
+        <div className="YouBunch-modal" role="dialog" aria-modal="true" aria-labelledby={MODAL_TITLE_ID}>
           <ModalHeader
             title={title}
             titleId={MODAL_TITLE_ID}

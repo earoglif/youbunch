@@ -30,14 +30,14 @@ export function ModalHeader({
   onClose,
 }: ModalHeaderProps) {
   return (
-    <div className="grouptube-modal-header">
-      <h2 id={titleId} className="grouptube-modal-title">
+    <div className="YouBunch-modal-header">
+      <h2 id={titleId} className="YouBunch-modal-title">
         {title}
       </h2>
-      <div className="grouptube-modal-header-actions">
+      <div className="YouBunch-modal-header-actions">
         <button
           type="button"
-          className="grouptube-icon-button"
+          className="YouBunch-icon-button"
           aria-label={exportLabel}
           title={exportLabel}
           disabled={actionsDisabled}
@@ -47,7 +47,7 @@ export function ModalHeader({
         </button>
         <button
           type="button"
-          className="grouptube-icon-button"
+          className="YouBunch-icon-button"
           aria-label={importLabel}
           title={importLabel}
           disabled={actionsDisabled}
@@ -57,7 +57,7 @@ export function ModalHeader({
         </button>
         <button
           type="button"
-          className="grouptube-icon-button"
+          className="YouBunch-icon-button"
           aria-label={openGroupingPromptLabel}
           title={openGroupingPromptLabel}
           disabled={groupingPromptDisabled}
@@ -65,7 +65,7 @@ export function ModalHeader({
         >
           <BotMessageSquare size={20} strokeWidth={2} aria-hidden="true" />
         </button>
-        <button type="button" aria-label={closeLabel} className="grouptube-icon-button" onClick={onClose}>
+        <button type="button" aria-label={closeLabel} className="YouBunch-icon-button" onClick={onClose}>
           <X size={20} strokeWidth={2} aria-hidden="true" />
         </button>
       </div>

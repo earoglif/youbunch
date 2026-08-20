@@ -10,10 +10,10 @@ import { t } from "./i18n";
 import { removeSubscriptions, requestChannelDetails, requestSubscriptions, upsertSubscription } from "./services/subscriptions";
 import { initSubscribeWatcher, initUnsubscribeWatcher } from "./services/subscribe-watcher";
 
-const ROOT_HOST_ID = "grouptube-subscribe-assign-host";
-const STYLE_ELEMENT_ID = "grouptube-subscribe-assign-shadow-styles";
-const ROOT_ELEMENT_ID = "grouptube-subscribe-assign-shadow-root";
-const DEBUG_PREFIX = "[grouptube/subscribe-assign]";
+const ROOT_HOST_ID = "YouBunch-subscribe-assign-host";
+const STYLE_ELEMENT_ID = "YouBunch-subscribe-assign-shadow-styles";
+const ROOT_ELEMENT_ID = "YouBunch-subscribe-assign-shadow-root";
+const DEBUG_PREFIX = "[YouBunch/subscribe-assign]";
 
 function SubscribeAssignRoot() {
   const [pendingChannel, setPendingChannel] = useState<SubscribedChannelInfo | null>(null);

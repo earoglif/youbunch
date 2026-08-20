@@ -61,14 +61,14 @@ export function GroupCard({
   return (
     <article
       ref={setNodeRef}
-      className={`grouptube-group-card${isDragging ? " is-dragging" : ""}${isSubscriptionOver ? " is-over" : ""}`}
+      className={`YouBunch-group-card${isDragging ? " is-dragging" : ""}${isSubscriptionOver ? " is-over" : ""}`}
       style={style}
     >
-      <div className="grouptube-group-header">
-        <div className="grouptube-group-title-wrap">
+      <div className="YouBunch-group-header">
+        <div className="YouBunch-group-title-wrap">
           <button
             type="button"
-            className="grouptube-drag-handle"
+            className="YouBunch-drag-handle"
             aria-label={labels.dragGroupLabel}
             {...attributes}
             {...listeners}
@@ -77,24 +77,24 @@ export function GroupCard({
           </button>
           <button
             type="button"
-            className="grouptube-collapse-toggle"
+            className="YouBunch-collapse-toggle"
             onClick={onToggleCollapsed}
             aria-label={isCollapsed ? labels.expandLabel : labels.collapseLabel}
           >
             <ChevronDown
               size={18}
               strokeWidth={2}
-              className={`grouptube-collapse-chevron${isCollapsed ? " is-collapsed" : ""}`}
+              className={`YouBunch-collapse-chevron${isCollapsed ? " is-collapsed" : ""}`}
               aria-hidden="true"
             />
           </button>
-          <span className="grouptube-group-color" style={{ backgroundColor: group.color }} />
-          <h3 className="grouptube-group-title">{group.name}</h3>
+          <span className="YouBunch-group-color" style={{ backgroundColor: group.color }} />
+          <h3 className="YouBunch-group-title">{group.name}</h3>
         </div>
-        <div className="grouptube-inline-actions grouptube-group-header-actions">
+        <div className="YouBunch-inline-actions YouBunch-group-header-actions">
           <button
             type="button"
-            className="grouptube-icon-button grouptube-group-action-icon"
+            className="YouBunch-icon-button YouBunch-group-action-icon"
             onClick={() => setIsEditing((value) => !value)}
             title={labels.editLabel}
             aria-label={labels.editLabel}
@@ -103,7 +103,7 @@ export function GroupCard({
           </button>
           <button
             type="button"
-            className="grouptube-icon-button grouptube-group-action-icon"
+            className="YouBunch-icon-button YouBunch-group-action-icon"
             onClick={() => void onDelete(group.id)}
             title={labels.deleteLabel}
             aria-label={labels.deleteLabel}
@@ -128,7 +128,7 @@ export function GroupCard({
       ) : null}
 
       {!isCollapsed ? (
-        <div className="grouptube-group-content">
+        <div className="YouBunch-group-content">
           {subscriptions.length > 0 ? (
             subscriptions.map((subscription) => (
               <SubscriptionItem
@@ -139,7 +139,7 @@ export function GroupCard({
               />
             ))
           ) : (
-            <p className="grouptube-empty-text">{labels.emptyLabel}</p>
+            <p className="YouBunch-empty-text">{labels.emptyLabel}</p>
           )}
         </div>
       ) : null}

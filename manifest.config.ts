@@ -3,9 +3,9 @@ import { defineManifest } from '@crxjs/vite-plugin'
 export function createManifest(googleClientId: string) {
   return defineManifest({
     name: '__MSG_extName__',
-    version: '1.0.0',
+    version: '0.1.0',
     manifest_version: 3,
-    key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxjFlaKuVufluThpiSDnnr4SsyU9Sa9khBSkMC73xIaT17p9kOycRounjZmyf1Wh1x5wSl4IIcqM6S69k7/yvMFo5sQk0tm1hugEBR7ZZ9yzSHhuCyLB8X6R3i4m/cc3a+oeI5/mf+buBInmppW2/O2RFm/mQsY5TpvImmbFAWG2XK1RzrF6laWHkSYS7k5myo+yT3pZ+Pa86aC3Fg14S1kyi+Erw0k5woogw1qlXtqVjVe+NVHFf02q6Nuvtd0TMfw21XzQsTI8bhVMyqtC4lyTnurkBWCqxSCy6iOoLJIk/SmM7RnOHxo2TSSFK7Ojw+PW0p9Ci7AyJPgZzao8kZwIDAQAB',
+    key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu9jd8WxfJZOwGXlPD+RCMrrXvEvsk/Ue75radts5dszL3WWPXVzY7IXolsVZhyPstY2SbAiqHGgBjvcvT1qX5XXSusJ/CRR+2n/23xLksq8xV7ilbt22U1L95Iq5gQ/3wwyYQx2HzjJiOgiwOQ0Xj51OgOj8TIwSn+yknzCmK9tGxfslSI/bhjQRvOKLsgKMOrALeGXG8Qbyf2et/nHlaiAzYF+vOFGbBj74sZmrSpEuQ4+3AIayYiQTXsnfTZHifGhy4l9noJB6bJlByH7S5H+Is8Junmt5wi4hrWW45PAmppfaSwUOkryGo2/Rzs3qSAsieAXAqUQY0LowQa+1cQIDAQAB',
     default_locale: 'en',
     description: '__MSG_extDescription__',
     icons: {
