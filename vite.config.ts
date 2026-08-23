@@ -16,8 +16,14 @@ export default defineConfig(({ mode }) => {
     throw new Error('Missing VITE_GOOGLE_CLIENT_ID in .env')
   }
 
+  const isStoreBuild = mode === 'store'
+
   return {
-    plugins: [react(), tailwindcss(), crx({ manifest: createManifest(googleClientId) })],
+    plugins: [
+      react(),
+      tailwindcss(),
+      crx({ manifest: createManifest(googleClientId, !isStoreBuild) }),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

@@ -1,11 +1,14 @@
 import { defineManifest } from '@crxjs/vite-plugin'
 
-export function createManifest(googleClientId: string) {
+const EXTENSION_PUBLIC_KEY =
+  'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu9jd8WxfJZOwGXlPD+RCMrrXvEvsk/Ue75radts5dszL3WWPXVzY7IXolsVZhyPstY2SbAiqHGgBjvcvT1qX5XXSusJ/CRR+2n/23xLksq8xV7ilbt22U1L95Iq5gQ/3wwyYQx2HzjJiOgiwOQ0Xj51OgOj8TIwSn+yknzCmK9tGxfslSI/bhjQRvOKLsgKMOrALeGXG8Qbyf2et/nHlaiAzYF+vOFGbBj74sZmrSpEuQ4+3AIayYiQTXsnfTZHifGhy4l9noJB6bJlByH7S5H+Is8Junmt5wi4hrWW45PAmppfaSwUOkryGo2/Rzs3qSAsieAXAqUQY0LowQa+1cQIDAQAB'
+
+export function createManifest(googleClientId: string, includeKey = true) {
   return defineManifest({
     name: '__MSG_extName__',
     version: '0.1.0',
     manifest_version: 3,
-    key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu9jd8WxfJZOwGXlPD+RCMrrXvEvsk/Ue75radts5dszL3WWPXVzY7IXolsVZhyPstY2SbAiqHGgBjvcvT1qX5XXSusJ/CRR+2n/23xLksq8xV7ilbt22U1L95Iq5gQ/3wwyYQx2HzjJiOgiwOQ0Xj51OgOj8TIwSn+yknzCmK9tGxfslSI/bhjQRvOKLsgKMOrALeGXG8Qbyf2et/nHlaiAzYF+vOFGbBj74sZmrSpEuQ4+3AIayYiQTXsnfTZHifGhy4l9noJB6bJlByH7S5H+Is8Junmt5wi4hrWW45PAmppfaSwUOkryGo2/Rzs3qSAsieAXAqUQY0LowQa+1cQIDAQAB',
+    ...(includeKey ? { key: EXTENSION_PUBLIC_KEY } : {}),
     default_locale: 'en',
     description: '__MSG_extDescription__',
     icons: {

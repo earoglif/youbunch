@@ -12,6 +12,7 @@
     "dev": "vite build --watch",
     "dev:hmr": "vite",
     "build": "vite build",
+    "build:store": "vite build --mode store",
     "preview": "vite preview"
   },
   "devDependencies": {
