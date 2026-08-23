@@ -4,6 +4,7 @@ import {
   ListChevronsDownUp,
   ListChevronsUpDown,
   LoaderCircle,
+  TriangleAlert,
 } from "lucide-react";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { useCollapsedGroupsPersistence } from "../hooks/useCollapsedGroups";
@@ -25,6 +26,8 @@ export type ModalBodyLabels = {
   sortNameAscLabel: string;
   sortNameDescLabel: string;
   loadingLabel: string;
+  retryLabel: string;
+  subscriptionsErrorLabel: string;
   noGroupsLabel: string;
   ungroupedTitle: string;
   ungroupedEmptyLabel: string;
@@ -57,6 +60,8 @@ type ModalBodyProps = {
   labels: ModalBodyLabels;
   subscriptions: ISubscription[];
   isSubscriptionsLoading: boolean;
+  hasSubscriptionsError: boolean;
+  onRetrySubscriptions: () => void;
 };
 
 export type ModalBodyHandle = {
@@ -64,7 +69,7 @@ export type ModalBodyHandle = {
 };
 
 export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function ModalBody(
-  { labels, subscriptions, isSubscriptionsLoading },
+  { labels, subscriptions, isSubscriptionsLoading, hasSubscriptionsError, onRetrySubscriptions },
   ref
 ) {
   const [isCreateGroupOpen, setIsCreateGroupOpen] = useState(false);
@@ -259,6 +264,16 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
         <div className="YouBunch-loading" role="status" aria-live="polite">
           <LoaderCircle className="YouBunch-loading-icon" aria-hidden="true" />
           <span>{labels.loadingLabel}</span>
+        </div>
+      ) : null}
+
+      {!isLoading && hasSubscriptionsError ? (
+        <div className="YouBunch-error" role="alert">
+          <TriangleAlert className="YouBunch-error-icon" size={18} strokeWidth={2} aria-hidden="true" />
+          <span className="YouBunch-error-text">{labels.subscriptionsErrorLabel}</span>
+          <button type="button" className="YouBunch-button" onClick={onRetrySubscriptions}>
+            {labels.retryLabel}
+          </button>
         </div>
       ) : null}
 

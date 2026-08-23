@@ -47,7 +47,7 @@ function SubscribeAssignRoot() {
           setPendingChannel(resolved);
         })
         .catch(() => {
-          notify.error("Failed to fetch channel details");
+          notify.error(t("genericError"));
           upsertSubscription({
             channelId: fallbackInfo.channelId,
             name: fallbackInfo.name,

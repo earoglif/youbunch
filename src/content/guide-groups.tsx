@@ -50,7 +50,12 @@ function GuideGroupsSection() {
   const [sortMode, setSortMode] = useState<SubscriptionSortMode>("relevance");
   const [currentPathname, setCurrentPathname] = useState(getCurrentPathname);
   const { userId, groups, isLoading: isGroupsLoading, channelToGroupMap } = useGroups();
-  const { subscriptions, isLoading: isSubscriptionsLoading } = useSubscriptions();
+  const {
+    subscriptions,
+    isLoading: isSubscriptionsLoading,
+    hasError: hasSubscriptionsError,
+    refresh: refreshSubscriptions,
+  } = useSubscriptions();
   const { newnessMap, markSeen } = useChannelNewness(subscriptions);
   const [collapsedGroupIds, setCollapsedGroupIds] = useCollapsedGroupsPersistence(
     userId,
@@ -143,6 +148,14 @@ function GuideGroupsSection() {
     <div className="guide-groups-container">
       <div className="guide-groups-section">
         <GuideGroupsButton onClick={() => setIsModalOpen(true)} />
+        {hasSubscriptionsError ? (
+          <div className="guide-groups-error" role="alert">
+            <p className="guide-groups-error-text">{t("subscriptionsError")}</p>
+            <button type="button" className="guide-groups-error-retry" onClick={refreshSubscriptions}>
+              {t("retry")}
+            </button>
+          </div>
+        ) : null}
         {!isListLoading ? (
           <div className="guide-groups-list">
             {groups.map((group) => (
@@ -185,6 +198,8 @@ function GuideGroupsSection() {
           sortNameAscLabel: t("sortNameAsc"),
           sortNameDescLabel: t("sortNameDesc"),
           loadingLabel: t("loading"),
+          retryLabel: t("retry"),
+          subscriptionsErrorLabel: t("subscriptionsError"),
           noGroupsLabel: t("noGroups"),
           ungroupedTitle: t("ungroupedSubscriptions"),
           ungroupedEmptyLabel: t("ungroupedEmpty"),

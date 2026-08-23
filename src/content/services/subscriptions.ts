@@ -1,5 +1,5 @@
 export {
-  getLastSubscriptions,
+  getSubscriptionsSnapshot,
   removeSubscriptions,
   requestChannelDetails,
   requestSubscriptions,

@@ -1,14 +1,26 @@
 import { sendMessage } from "../../messaging/client";
 import type { ISubscription } from "../../types";
 
-type SubscriptionsListener = (subscriptions: ISubscription[]) => void;
+export type SubscriptionsStatus = "loading" | "ready" | "error";
 
-let lastSubscriptions: ISubscription[] = [];
+export type SubscriptionsSnapshot = {
+  subscriptions: ISubscription[];
+  status: SubscriptionsStatus;
+};
+
+type SubscriptionsListener = () => void;
+
+let snapshot: SubscriptionsSnapshot = {
+  subscriptions: [],
+  status: "loading",
+};
+
+let latestLoadId = 0;
 const listeners = new Set<SubscriptionsListener>();
 
-function emit(subs: ISubscription[]): void {
-  lastSubscriptions = subs;
-  for (const fn of listeners) fn(subs);
+function setSnapshot(patch: Partial<SubscriptionsSnapshot>): void {
+  snapshot = { ...snapshot, ...patch };
+  for (const listener of listeners) listener();
 }
 
 function normalizeSubscriptions(value: unknown): ISubscription[] {
@@ -46,19 +58,22 @@ function normalizeSubscriptions(value: unknown): ISubscription[] {
 }
 
 async function loadSubscriptions(): Promise<void> {
-  const subscriptions = await sendMessage("get-subscriptions", {});
-  emit(normalizeSubscriptions(subscriptions));
+  const loadId = ++latestLoadId;
+  setSnapshot({ status: "loading" });
+
+  try {
+    const subscriptions = await sendMessage("get-subscriptions", {});
+    if (loadId !== latestLoadId) return;
+    setSnapshot({ subscriptions: normalizeSubscriptions(subscriptions), status: "ready" });
+  } catch (error: unknown) {
+    if (loadId !== latestLoadId) return;
+    console.error("Failed to request subscriptions", error);
+    setSnapshot({ status: "error" });
+  }
 }
 
-export function subscribeToSubscriptions(
-  listener: SubscriptionsListener,
-  emitCached = true,
-): () => void {
+export function subscribeToSubscriptions(listener: SubscriptionsListener): () => void {
   listeners.add(listener);
-
-  if (emitCached && lastSubscriptions.length > 0) {
-    listener(lastSubscriptions);
-  }
 
   return () => {
     listeners.delete(listener);
@@ -66,14 +81,11 @@ export function subscribeToSubscriptions(
 }
 
 export function requestSubscriptions(): void {
-  void loadSubscriptions().catch((error: unknown) => {
-    console.error("Failed to request subscriptions", error);
-    emit(lastSubscriptions);
-  });
+  void loadSubscriptions();
 }
 
-export function getLastSubscriptions(): ISubscription[] {
-  return lastSubscriptions;
+export function getSubscriptionsSnapshot(): SubscriptionsSnapshot {
+  return snapshot;
 }
 
 export function upsertSubscription(subscription: ISubscription): void {
@@ -96,13 +108,13 @@ export function upsertSubscription(subscription: ISubscription): void {
         : undefined,
   };
 
-  const existingIndex = lastSubscriptions.findIndex((item) => item.channelId === channelId);
+  const existingIndex = snapshot.subscriptions.findIndex((item) => item.channelId === channelId);
   if (existingIndex < 0) {
-    emit([...lastSubscriptions, nextItem]);
+    setSnapshot({ subscriptions: [...snapshot.subscriptions, nextItem] });
     return;
   }
 
-  const existing = lastSubscriptions[existingIndex];
+  const existing = snapshot.subscriptions[existingIndex];
   const merged: ISubscription = {
     ...existing,
     ...nextItem,
@@ -111,9 +123,9 @@ export function upsertSubscription(subscription: ISubscription): void {
     description: nextItem.description ?? existing.description,
   };
 
-  const nextList = [...lastSubscriptions];
+  const nextList = [...snapshot.subscriptions];
   nextList[existingIndex] = merged;
-  emit(nextList);
+  setSnapshot({ subscriptions: nextList });
 }
 
 export function removeSubscriptions(channelIds: string[]): void {
@@ -126,9 +138,9 @@ export function removeSubscriptions(channelIds: string[]): void {
   if (ids.length === 0) return;
 
   const idSet = new Set(ids);
-  const nextList = lastSubscriptions.filter((item) => !idSet.has(item.channelId));
-  if (nextList.length === lastSubscriptions.length) return;
-  emit(nextList);
+  const nextList = snapshot.subscriptions.filter((item) => !idSet.has(item.channelId));
+  if (nextList.length === snapshot.subscriptions.length) return;
+  setSnapshot({ subscriptions: nextList });
 }
 
 export async function requestChannelDetails(channelId: string): Promise<ISubscription | null> {

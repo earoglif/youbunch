@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 import {
-  getLastSubscriptions,
+  getSubscriptionsSnapshot,
   requestSubscriptions,
   subscribeToSubscriptions,
 } from "../../shared/services/stores/subscriptions-store";
 
 export function useSubscriptions() {
-  const subscriptions = useSyncExternalStore(
-    (onChange) => subscribeToSubscriptions(() => onChange(), true),
-    () => getLastSubscriptions(),
-    () => getLastSubscriptions()
+  const { subscriptions, status } = useSyncExternalStore(
+    subscribeToSubscriptions,
+    getSubscriptionsSnapshot,
+    getSubscriptionsSnapshot
   );
-  const isLoading = subscriptions.length === 0;
 
   useEffect(() => {
     requestSubscriptions();
@@ -23,7 +22,8 @@ export function useSubscriptions() {
 
   return {
     subscriptions,
-    isLoading,
+    isLoading: status === "loading" && subscriptions.length === 0,
+    hasError: status === "error",
     refresh,
   };
 }

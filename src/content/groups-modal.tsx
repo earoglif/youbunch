@@ -36,7 +36,12 @@ type GroupsModalPortalContentProps = {
 };
 
 function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: GroupsModalPortalContentProps) {
-  const { subscriptions, isLoading: isSubscriptionsLoading, refresh } = useSubscriptions();
+  const {
+    subscriptions,
+    isLoading: isSubscriptionsLoading,
+    hasError: hasSubscriptionsError,
+    refresh,
+  } = useSubscriptions();
   const modalBodyRef = useRef<ModalBodyHandle>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isImportExportBusy, setIsImportExportBusy] = useState(false);
@@ -142,6 +147,8 @@ function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: Groups
             labels={labels}
             subscriptions={subscriptions}
             isSubscriptionsLoading={isSubscriptionsLoading}
+            hasSubscriptionsError={hasSubscriptionsError}
+            onRetrySubscriptions={refresh}
           />
           <ToastHost />
         </div>

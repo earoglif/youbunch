@@ -83,6 +83,45 @@
   opacity: 1;
 }
 
+.guide-groups-error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: calc(100% - 12px);
+  margin-top: 6px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: rgba(204, 0, 0, 0.1);
+  color: var(--yt-spec-text-secondary, #606060);
+}
+
+.guide-groups-error-text {
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+}
+
+.guide-groups-error-retry {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 4px 12px;
+  background: var(--YouBunch-guide-hover-bg);
+  color: inherit;
+  font: inherit;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+  cursor: pointer;
+}
+
+.guide-groups-error-retry:hover,
+.guide-groups-error-retry:focus-visible {
+  background: rgba(204, 0, 0, 0.16);
+  outline: none;
+}
+
 .guide-groups-list {
   margin-top: 6px;
 }

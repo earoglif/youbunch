@@ -443,6 +443,30 @@
   font-size: 13px;
 }
 
+.YouBunch-error {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(204, 0, 0, 0.35);
+  border-radius: 10px;
+  background: rgba(204, 0, 0, 0.08);
+  color: var(--YouBunch-text);
+  font-size: 13px;
+}
+
+.YouBunch-error-icon {
+  flex-shrink: 0;
+  color: #cc0000;
+}
+
+.YouBunch-error-text {
+  flex: 1;
+  min-width: 0;
+}
+
 .YouBunch-loading-icon {
   width: 14px;
   height: 14px;
