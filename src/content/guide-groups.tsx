@@ -1,6 +1,7 @@
 import { Group, Settings } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
+import { storage as extensionStorage } from "webextension-polyfill";
 import { STORAGE_KEYS } from "../shared/constants";
 import styles from "./guide-groups.css?inline";
 import { GuideGroupItem } from "./components/GuideGroupItem";
@@ -12,14 +13,13 @@ import { useGroups } from "./hooks/useGroups";
 import { useSubscriptions } from "./hooks/useSubscriptions";
 import { ensureShadowMount } from "./mount";
 import { t } from "./i18n";
-import { sortSubscriptions } from "./services/sort-subscriptions";
+import { isSubscriptionSortMode, sortSubscriptions } from "./services/sort-subscriptions";
 import { loadSubscriptionSort, type SubscriptionSortMode } from "./services/subscription-sort";
 
 const GROUPS_SECTION_ID = "YouBunch-groups-section";
 const GROUPS_SECTION_STYLE_ID = "YouBunch-groups-section-styles";
 const GROUPS_SECTION_ROOT_ID = "YouBunch-groups-section-root";
 const GUIDE_COLLAPSED_GROUPS_STORAGE_PREFIX = STORAGE_KEYS.guideCollapsedPrefix;
-const GUIDE_SUBSCRIPTION_SORT_STORAGE_PREFIX = STORAGE_KEYS.guideSortPrefix;
 
 function getCurrentPathname(): string {
   if (typeof window === "undefined") return "/";
@@ -65,7 +65,7 @@ function GuideGroupsSection() {
   useEffect(() => {
     let isCancelled = false;
 
-    void loadSubscriptionSort(userId, GUIDE_SUBSCRIPTION_SORT_STORAGE_PREFIX)
+    void loadSubscriptionSort(userId)
       .then((storedSortMode) => {
         if (!isCancelled) {
           setSortMode(storedSortMode);
@@ -80,6 +80,25 @@ function GuideGroupsSection() {
     return () => {
       isCancelled = true;
     };
+  }, [userId]);
+
+  useEffect(() => {
+    const sortStorageKey = userId
+      ? `${STORAGE_KEYS.subscriptionSortPrefix}${userId}`
+      : `${STORAGE_KEYS.subscriptionSortPrefix}anonymous`;
+
+    const handleStorageChanged: Parameters<typeof extensionStorage.onChanged.addListener>[0] = (
+      changes,
+      areaName
+    ) => {
+      if (areaName !== "local") return;
+      const nextSortMode = changes[sortStorageKey]?.newValue;
+      if (typeof nextSortMode !== "string" || !isSubscriptionSortMode(nextSortMode)) return;
+      setSortMode(nextSortMode);
+    };
+
+    extensionStorage.onChanged.addListener(handleStorageChanged);
+    return () => extensionStorage.onChanged.removeListener(handleStorageChanged);
   }, [userId]);
 
   useEffect(() => {
