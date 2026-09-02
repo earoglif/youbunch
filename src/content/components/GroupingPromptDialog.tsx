@@ -1,22 +1,12 @@
 import { type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { t } from "../i18n";
 
 type CopyStatus = "idle" | "copied" | "error";
-
-export type GroupingPromptDialogLabels = {
-  title: string;
-  description: string;
-  closeLabel: string;
-  copyLabel: string;
-  copiedLabel: string;
-  copyErrorLabel: string;
-  promptFieldLabel: string;
-};
 
 type GroupingPromptDialogProps = {
   isOpen: boolean;
   prompt: string;
-  labels: GroupingPromptDialogLabels;
   onClose: () => void;
 };
 
@@ -25,7 +15,6 @@ const PROMPT_DIALOG_TITLE_ID = "YouBunch-grouping-prompt-title";
 export function GroupingPromptDialog({
   isOpen,
   prompt,
-  labels,
   onClose,
 }: GroupingPromptDialogProps) {
   const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
@@ -83,30 +72,30 @@ export function GroupingPromptDialog({
       <div className="YouBunch-prompt-dialog" role="dialog" aria-modal="true" aria-labelledby={PROMPT_DIALOG_TITLE_ID}>
         <div className="YouBunch-prompt-header">
           <h3 id={PROMPT_DIALOG_TITLE_ID} className="YouBunch-prompt-title">
-            {labels.title}
+            {t("groupingPromptTitle")}
           </h3>
-          <button type="button" className="YouBunch-icon-button" aria-label={labels.closeLabel} onClick={onClose}>
+          <button type="button" className="YouBunch-icon-button" aria-label={t("close")} onClick={onClose}>
             <X size={20} strokeWidth={2} aria-hidden="true" />
           </button>
         </div>
 
         <div className="YouBunch-prompt-body">
-          <p className="YouBunch-info-text">{labels.description}</p>
+          <p className="YouBunch-info-text">{t("groupingPromptDescription")}</p>
 
           <textarea
             className="YouBunch-prompt-textarea"
             readOnly
             value={prompt}
-            aria-label={labels.promptFieldLabel}
+            aria-label={t("groupingPromptField")}
           />
 
           <div className="YouBunch-inline-actions YouBunch-prompt-actions">
             <button type="button" className="YouBunch-button is-primary" onClick={copyPrompt}>
-              {copyStatus === "copied" ? labels.copiedLabel : labels.copyLabel}
+              {copyStatus === "copied" ? t("copiedPrompt") : t("copyPrompt")}
             </button>
           </div>
 
-          {copyStatus === "error" ? <p className="YouBunch-info-text">{labels.copyErrorLabel}</p> : null}
+          {copyStatus === "error" ? <p className="YouBunch-info-text">{t("copyPromptError")}</p> : null}
         </div>
       </div>
     </div>

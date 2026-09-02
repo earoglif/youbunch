@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { useCollapsedGroupsPersistence } from "../hooks/useCollapsedGroups";
+import { t } from "../i18n";
 import { useGroups } from "../hooks/useGroups";
 import { useGroupsDnd } from "../modal/hooks/useGroupsDnd";
 import { buildGroupingPrompt } from "../services/grouping-prompt";
@@ -19,45 +20,7 @@ import { GroupingPromptDialog } from "./GroupingPromptDialog";
 import { GroupList } from "./GroupList";
 import { SubscriptionList } from "./SubscriptionList";
 
-export type ModalBodyLabels = {
-  newGroupLabel: string;
-  sortLabel: string;
-  sortRelevanceLabel: string;
-  sortNameAscLabel: string;
-  sortNameDescLabel: string;
-  loadingLabel: string;
-  retryLabel: string;
-  subscriptionsErrorLabel: string;
-  noGroupsLabel: string;
-  ungroupedTitle: string;
-  ungroupedEmptyLabel: string;
-  groupEmptyLabel: string;
-  groupEditLabel: string;
-  groupDeleteLabel: string;
-  groupExpandLabel: string;
-  groupCollapseLabel: string;
-  expandAllGroupsLabel: string;
-  collapseAllGroupsLabel: string;
-  groupDragHandleLabel: string;
-  subscriptionDragHandleLabel: string;
-  createNamePlaceholder: string;
-  groupColorPickerLabel: string;
-  createLabel: string;
-  saveLabel: string;
-  cancelLabel: string;
-  deleteGroupConfirm: string;
-  openGroupingPromptLabel: string;
-  promptDialogTitle: string;
-  promptDialogDescription: string;
-  promptDialogCloseLabel: string;
-  promptDialogCopyLabel: string;
-  promptDialogCopiedLabel: string;
-  promptDialogCopyErrorLabel: string;
-  promptDialogFieldLabel: string;
-};
-
 type ModalBodyProps = {
-  labels: ModalBodyLabels;
   subscriptions: ISubscription[];
   isSubscriptionsLoading: boolean;
   hasSubscriptionsError: boolean;
@@ -69,7 +32,7 @@ export type ModalBodyHandle = {
 };
 
 export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function ModalBody(
-  { labels, subscriptions, isSubscriptionsLoading, hasSubscriptionsError, onRetrySubscriptions },
+  { subscriptions, isSubscriptionsLoading, hasSubscriptionsError, onRetrySubscriptions },
   ref
 ) {
   const [isCreateGroupOpen, setIsCreateGroupOpen] = useState(false);
@@ -202,16 +165,16 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
           onClick={() => setIsCreateGroupOpen(true)}
         >
           <DiamondPlus size={24} strokeWidth={2} aria-hidden="true" />
-          {labels.newGroupLabel}
+          {t("newGroup")}
         </button>
         <div className="YouBunch-toolbar-end">
-          <label className="YouBunch-toolbar-select-wrap" title={labels.sortLabel}>
+          <label className="YouBunch-toolbar-select-wrap" title={t("sortSubscriptions")}>
             <span className="YouBunch-toolbar-select-label" aria-hidden="true">
               <ArrowDownUp size={18} strokeWidth={2} />
             </span>
             <select
               className="YouBunch-toolbar-select"
-              aria-label={labels.sortLabel}
+              aria-label={t("sortSubscriptions")}
               value={sortMode}
               onChange={(event) => {
                 const nextSortMode = event.target.value;
@@ -219,17 +182,17 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
                 handleSortModeChange(nextSortMode);
               }}
             >
-              <option value="relevance">{labels.sortRelevanceLabel}</option>
-              <option value="nameAsc">{labels.sortNameAscLabel}</option>
-              <option value="nameDesc">{labels.sortNameDescLabel}</option>
+              <option value="relevance">{t("sortRelevance")}</option>
+              <option value="nameAsc">{t("sortNameAsc")}</option>
+              <option value="nameDesc">{t("sortNameDesc")}</option>
             </select>
           </label>
           {!isLoading && groups.length > 0 ? (
             <button
               type="button"
               className="YouBunch-icon-button"
-              aria-label={allGroupsCollapsed ? labels.expandAllGroupsLabel : labels.collapseAllGroupsLabel}
-              title={allGroupsCollapsed ? labels.expandAllGroupsLabel : labels.collapseAllGroupsLabel}
+              aria-label={allGroupsCollapsed ? t("expandAllGroups") : t("collapseAllGroups")}
+              title={allGroupsCollapsed ? t("expandAllGroups") : t("collapseAllGroups")}
               onClick={handleCollapseExpandAll}
             >
               {allGroupsCollapsed ? (
@@ -245,13 +208,6 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
       {isCreateGroupOpen ? (
         <GroupForm
           mode="create"
-          labels={{
-            namePlaceholder: labels.createNamePlaceholder,
-            colorPickerLabel: labels.groupColorPickerLabel,
-            createLabel: labels.createLabel,
-            saveLabel: labels.saveLabel,
-            cancelLabel: labels.cancelLabel,
-          }}
           onCancel={() => setIsCreateGroupOpen(false)}
           onSubmit={async (values) => {
             await createGroup(values);
@@ -263,16 +219,16 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
       {isLoading ? (
         <div className="YouBunch-loading" role="status" aria-live="polite">
           <LoaderCircle className="YouBunch-loading-icon" aria-hidden="true" />
-          <span>{labels.loadingLabel}</span>
+          <span>{t("loading")}</span>
         </div>
       ) : null}
 
       {!isLoading && hasSubscriptionsError ? (
         <div className="YouBunch-error" role="alert">
           <TriangleAlert className="YouBunch-error-icon" size={18} strokeWidth={2} aria-hidden="true" />
-          <span className="YouBunch-error-text">{labels.subscriptionsErrorLabel}</span>
+          <span className="YouBunch-error-text">{t("subscriptionsError")}</span>
           <button type="button" className="YouBunch-button" onClick={onRetrySubscriptions}>
-            {labels.retryLabel}
+            {t("retry")}
           </button>
         </div>
       ) : null}
@@ -290,24 +246,8 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
               subscriptionsByGroupId={subscriptionsByGroupId}
               collapsedGroupIds={collapsedGroupIds}
               onToggleGroupCollapsed={toggleGroupCollapsed}
-              labels={{
-                editLabel: labels.groupEditLabel,
-                deleteLabel: labels.groupDeleteLabel,
-                expandLabel: labels.groupExpandLabel,
-                collapseLabel: labels.groupCollapseLabel,
-                emptyLabel: labels.groupEmptyLabel,
-                dragGroupLabel: labels.groupDragHandleLabel,
-                dragSubscriptionLabel: labels.subscriptionDragHandleLabel,
-              }}
-              formLabels={{
-                namePlaceholder: labels.createNamePlaceholder,
-                colorPickerLabel: labels.groupColorPickerLabel,
-                createLabel: labels.createLabel,
-                saveLabel: labels.saveLabel,
-                cancelLabel: labels.cancelLabel,
-              }}
               onDeleteGroup={async (groupId) => {
-                if (!window.confirm(labels.deleteGroupConfirm)) return;
+                if (!window.confirm(t("deleteGroupConfirm"))) return;
                 await deleteGroup(groupId);
               }}
               onUpdateGroup={async (groupId, values) => {
@@ -315,30 +255,16 @@ export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function Mo
               }}
             />
           ) : (
-            <p className="YouBunch-info-text">{labels.noGroupsLabel}</p>
+            <p className="YouBunch-info-text">{t("noGroups")}</p>
           )}
 
-          <SubscriptionList
-            title={labels.ungroupedTitle}
-            emptyLabel={labels.ungroupedEmptyLabel}
-            dragSubscriptionLabel={labels.subscriptionDragHandleLabel}
-            subscriptions={ungroupedSubscriptions}
-          />
+          <SubscriptionList subscriptions={ungroupedSubscriptions} />
         </div>
       </DndContext>
 
       <GroupingPromptDialog
         isOpen={isGroupingPromptOpen}
         prompt={groupingPrompt}
-        labels={{
-          title: labels.promptDialogTitle,
-          description: labels.promptDialogDescription,
-          closeLabel: labels.promptDialogCloseLabel,
-          copyLabel: labels.promptDialogCopyLabel,
-          copiedLabel: labels.promptDialogCopiedLabel,
-          copyErrorLabel: labels.promptDialogCopyErrorLabel,
-          promptFieldLabel: labels.promptDialogFieldLabel,
-        }}
         onClose={() => setIsGroupingPromptOpen(false)}
       />
     </div>

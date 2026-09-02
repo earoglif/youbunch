@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { ToastHost } from "../components/ui/toast";
 import { notify } from "../shared/services/notifications";
 import modalStyles from "./groups-modal.css?inline";
-import { ModalBody, type ModalBodyHandle, type ModalBodyLabels } from "./components/ModalBody";
+import { ModalBody, type ModalBodyHandle } from "./components/ModalBody";
 import { ModalHeader } from "./components/ModalHeader";
 import { t } from "./i18n";
 import { ensureShadowMount } from "./mount";
@@ -15,11 +15,6 @@ const MODAL_TITLE_ID = "YouBunch-manage-groups-modal-title";
 const MODAL_HOST_ID = "YouBunch-modal-host";
 const MODAL_ROOT_ID = "YouBunch-modal-root";
 const MODAL_STYLE_ID = "YouBunch-modal-styles";
-type GroupsModalLabels = ModalBodyLabels & {
-  closeLabel: string;
-  exportLabel: string;
-  importLabel: string;
-};
 
 type GroupsModalProps = {
   isOpen: boolean;
@@ -28,12 +23,10 @@ type GroupsModalProps = {
 
 type GroupsModalPortalContentProps = {
   portalRoot: HTMLElement;
-  title: string;
-  labels: GroupsModalLabels;
   onClose: () => void;
 };
 
-function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: GroupsModalPortalContentProps) {
+function GroupsModalPortalContent({ portalRoot, onClose }: GroupsModalPortalContentProps) {
   const {
     subscriptions,
     isLoading: isSubscriptionsLoading,
@@ -72,7 +65,7 @@ function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: Groups
     void exportGroups()
       .catch((error: unknown) => {
         console.error("Failed to export groups", error);
-        notify.error(`${labels.exportLabel}: failed`);
+        notify.error(t("exportError"));
       })
       .finally(() => {
         setIsImportExportBusy(false);
@@ -102,7 +95,7 @@ function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: Groups
       })
       .catch((error: unknown) => {
         console.error("Failed to import groups", error);
-        notify.error(`${labels.importLabel}: failed`);
+        notify.error(t("importError"));
       })
       .finally(() => {
         setIsImportExportBusy(false);
@@ -120,17 +113,12 @@ function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: Groups
       >
         <div className="YouBunch-modal" role="dialog" aria-modal="true" aria-labelledby={MODAL_TITLE_ID}>
           <ModalHeader
-            title={title}
             titleId={MODAL_TITLE_ID}
-            openGroupingPromptLabel={labels.openGroupingPromptLabel}
             onOpenGroupingPrompt={() => modalBodyRef.current?.openGroupingPrompt()}
             groupingPromptDisabled={subscriptions.length === 0}
-            exportLabel={labels.exportLabel}
             onExport={handleExport}
-            importLabel={labels.importLabel}
             onImport={handleImportClick}
             actionsDisabled={isImportExportBusy}
-            closeLabel={labels.closeLabel}
             onClose={onClose}
           />
           <input
@@ -142,7 +130,6 @@ function GroupsModalPortalContent({ portalRoot, title, labels, onClose }: Groups
           />
           <ModalBody
             ref={modalBodyRef}
-            labels={labels}
             subscriptions={subscriptions}
             isSubscriptionsLoading={isSubscriptionsLoading}
             hasSubscriptionsError={hasSubscriptionsError}
@@ -174,46 +161,6 @@ function ensureModalRoot(): HTMLElement {
 
 export function GroupsModal({ isOpen, onClose }: GroupsModalProps) {
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
-  const title = t("manageGroups");
-  const labels: GroupsModalLabels = {
-    closeLabel: t("close"),
-    newGroupLabel: t("newGroup"),
-    exportLabel: t("exportGroups"),
-    importLabel: t("importGroups"),
-    sortLabel: t("sortSubscriptions"),
-    sortRelevanceLabel: t("sortRelevance"),
-    sortNameAscLabel: t("sortNameAsc"),
-    sortNameDescLabel: t("sortNameDesc"),
-    loadingLabel: t("loading"),
-    retryLabel: t("retry"),
-    subscriptionsErrorLabel: t("subscriptionsError"),
-    noGroupsLabel: t("noGroups"),
-    ungroupedTitle: t("ungroupedSubscriptions"),
-    ungroupedEmptyLabel: t("ungroupedEmpty"),
-    groupEmptyLabel: t("groupEmpty"),
-    groupEditLabel: t("edit"),
-    groupDeleteLabel: t("delete"),
-    groupExpandLabel: t("expandGroup"),
-    groupCollapseLabel: t("collapseGroup"),
-    expandAllGroupsLabel: t("expandAllGroups"),
-    collapseAllGroupsLabel: t("collapseAllGroups"),
-    groupDragHandleLabel: t("dragGroup"),
-    subscriptionDragHandleLabel: t("dragSubscription"),
-    createNamePlaceholder: t("groupNamePlaceholder"),
-    groupColorPickerLabel: t("groupColorPicker"),
-    createLabel: t("createGroupAction"),
-    saveLabel: t("save"),
-    cancelLabel: t("cancel"),
-    deleteGroupConfirm: t("deleteGroupConfirm"),
-    openGroupingPromptLabel: t("openGroupingPrompt"),
-    promptDialogTitle: t("groupingPromptTitle"),
-    promptDialogDescription: t("groupingPromptDescription"),
-    promptDialogCloseLabel: t("close"),
-    promptDialogCopyLabel: t("copyPrompt"),
-    promptDialogCopiedLabel: t("copiedPrompt"),
-    promptDialogCopyErrorLabel: t("copyPromptError"),
-    promptDialogFieldLabel: t("groupingPromptField"),
-  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -245,5 +192,5 @@ export function GroupsModal({ isOpen, onClose }: GroupsModalProps) {
 
   if (!isOpen || !portalRoot) return null;
 
-  return <GroupsModalPortalContent portalRoot={portalRoot} title={title} labels={labels} onClose={onClose} />;
+  return <GroupsModalPortalContent portalRoot={portalRoot} onClose={onClose} />;
 }

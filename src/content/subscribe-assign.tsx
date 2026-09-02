@@ -6,7 +6,7 @@ import modalStyles from "./groups-modal.css?inline";
 import { ensureShadowMount } from "./mount";
 import { AssignGroupDialog, type SubscribedChannelInfo } from "./components/AssignGroupDialog";
 import { useGroups } from "./hooks/useGroups";
-import { t } from "./i18n";
+import { t, useLanguageSync } from "./i18n";
 import { removeSubscriptions, requestChannelDetails, requestSubscriptions, upsertSubscription } from "./services/subscriptions";
 import { initSubscribeWatcher, initUnsubscribeWatcher } from "./services/subscribe-watcher";
 
@@ -16,6 +16,7 @@ const ROOT_ELEMENT_ID = "YouBunch-subscribe-assign-shadow-root";
 const DEBUG_PREFIX = "[YouBunch/subscribe-assign]";
 
 function SubscribeAssignRoot() {
+  useLanguageSync();
   const [pendingChannel, setPendingChannel] = useState<SubscribedChannelInfo | null>(null);
   const { groups, assignChannelToGroup, assignChannelsToGroup, createGroupAndAssignChannel } = useGroups();
 
@@ -93,18 +94,6 @@ function SubscribeAssignRoot() {
     <AssignGroupDialog
       channel={pendingChannel}
       groups={groups}
-      labels={{
-        title: t("assignGroupTitle"),
-        description: t("assignGroupDescription"),
-        skipLabel: t("assignSkipLabel"),
-        closeLabel: t("close"),
-        createNewGroupLabel: t("assignCreateNewGroupLabel"),
-        createNamePlaceholder: t("groupNamePlaceholder"),
-        colorPickerLabel: t("groupColorPicker"),
-        createLabel: t("createGroupAction"),
-        saveLabel: t("save"),
-        cancelLabel: t("cancel"),
-      }}
       onAssignToExisting={handleAssignExisting}
       onCreateAndAssign={handleCreateAndAssign}
       onClose={handleClose}

@@ -1,15 +1,15 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import type { GroupId, ISubscription } from "../../shared/types";
+import { t } from "../i18n";
 import { type SubscriptionDragData, getSubscriptionDragId } from "./dnd";
 
 type SubscriptionItemProps = {
   subscription: ISubscription;
   groupId: GroupId | null;
-  dragHandleLabel: string;
 };
 
-export function SubscriptionItem({ subscription, groupId, dragHandleLabel }: SubscriptionItemProps) {
+export function SubscriptionItem({ subscription, groupId }: SubscriptionItemProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: getSubscriptionDragId(subscription.channelId),
     data: {
@@ -25,7 +25,7 @@ export function SubscriptionItem({ subscription, groupId, dragHandleLabel }: Sub
 
   return (
     <div ref={setNodeRef} className={`YouBunch-subscription-item${isDragging ? " is-dragging" : ""}`} style={style}>
-      <button type="button" className="YouBunch-drag-handle" aria-label={dragHandleLabel} {...attributes} {...listeners}>
+      <button type="button" className="YouBunch-drag-handle" aria-label={t("dragSubscription")} {...attributes} {...listeners}>
         ≡
       </button>
       <span className="YouBunch-subscription-avatar-wrap" aria-hidden="true">

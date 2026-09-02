@@ -4,27 +4,16 @@ import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type { IGroup, ISubscription } from "../../shared/types";
-import { GroupForm, type GroupFormLabels } from "./GroupForm";
+import { t } from "../i18n";
+import { GroupForm } from "./GroupForm";
 import { SubscriptionItem } from "./SubscriptionItem";
 import { type GroupDragData, getGroupDragId } from "./dnd";
-
-export type GroupCardLabels = {
-  editLabel: string;
-  deleteLabel: string;
-  expandLabel: string;
-  collapseLabel: string;
-  emptyLabel: string;
-  dragGroupLabel: string;
-  dragSubscriptionLabel: string;
-};
 
 type GroupCardProps = {
   group: IGroup;
   subscriptions: ISubscription[];
   isCollapsed: boolean;
   onToggleCollapsed: () => void;
-  labels: GroupCardLabels;
-  formLabels: GroupFormLabels;
   onDelete: (groupId: string) => Promise<void> | void;
   onUpdate: (groupId: string, values: { name: string; color: string }) => Promise<void> | void;
 };
@@ -34,8 +23,6 @@ export function GroupCard({
   subscriptions,
   isCollapsed,
   onToggleCollapsed,
-  labels,
-  formLabels,
   onDelete,
   onUpdate,
 }: GroupCardProps) {
@@ -69,7 +56,7 @@ export function GroupCard({
           <button
             type="button"
             className="YouBunch-drag-handle"
-            aria-label={labels.dragGroupLabel}
+            aria-label={t("dragGroup")}
             {...attributes}
             {...listeners}
           >
@@ -79,7 +66,7 @@ export function GroupCard({
             type="button"
             className="YouBunch-collapse-toggle"
             onClick={onToggleCollapsed}
-            aria-label={isCollapsed ? labels.expandLabel : labels.collapseLabel}
+            aria-label={isCollapsed ? t("expandGroup") : t("collapseGroup")}
           >
             <ChevronDown
               size={18}
@@ -96,8 +83,8 @@ export function GroupCard({
             type="button"
             className="YouBunch-icon-button YouBunch-group-action-icon"
             onClick={() => setIsEditing((value) => !value)}
-            title={labels.editLabel}
-            aria-label={labels.editLabel}
+            title={t("edit")}
+            aria-label={t("edit")}
           >
             <Pencil size={18} strokeWidth={2} aria-hidden="true" />
           </button>
@@ -105,8 +92,8 @@ export function GroupCard({
             type="button"
             className="YouBunch-icon-button YouBunch-group-action-icon"
             onClick={() => void onDelete(group.id)}
-            title={labels.deleteLabel}
-            aria-label={labels.deleteLabel}
+            title={t("delete")}
+            aria-label={t("delete")}
           >
             <Trash2 size={18} strokeWidth={2} aria-hidden="true" />
           </button>
@@ -116,7 +103,6 @@ export function GroupCard({
       {isEditing ? (
         <GroupForm
           mode="edit"
-          labels={formLabels}
           initialName={group.name}
           initialColor={group.color}
           onCancel={() => setIsEditing(false)}
@@ -135,11 +121,10 @@ export function GroupCard({
                 key={subscription.channelId}
                 subscription={subscription}
                 groupId={group.id}
-                dragHandleLabel={labels.dragSubscriptionLabel}
               />
             ))
           ) : (
-            <p className="YouBunch-empty-text">{labels.emptyLabel}</p>
+            <p className="YouBunch-empty-text">{t("groupEmpty")}</p>
           )}
         </div>
       ) : null}

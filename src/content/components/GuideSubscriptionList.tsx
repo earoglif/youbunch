@@ -1,8 +1,8 @@
 import type { ChannelId, ISubscription } from "../../shared/types";
+import { t } from "../i18n";
 import { GuideSubscriptionItem } from "./GuideSubscriptionItem";
 
 type GuideSubscriptionListProps = {
-  title: string;
   currentPathname: string;
   subscriptions: ISubscription[];
   newnessMap?: Map<ChannelId, boolean>;
@@ -10,7 +10,6 @@ type GuideSubscriptionListProps = {
 };
 
 export function GuideSubscriptionList({
-  title,
   currentPathname,
   subscriptions,
   newnessMap,
@@ -20,7 +19,7 @@ export function GuideSubscriptionList({
 
   return (
     <section className="guide-ungrouped">
-      <h3 className="guide-ungrouped-title">{title}</h3>
+      <h3 className="guide-ungrouped-title">{t("ungroupedSubscriptions")}</h3>
       <div className="guide-sub-list">
         {subscriptions.map((subscription) => (
           <GuideSubscriptionItem

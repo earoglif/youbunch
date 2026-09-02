@@ -1,34 +1,31 @@
 import { BotMessageSquare, Download, Upload, X } from "lucide-react";
+import { t } from "../i18n";
 
 type ModalHeaderProps = {
-  title: string;
   titleId?: string;
-  openGroupingPromptLabel: string;
   onOpenGroupingPrompt: () => void;
   groupingPromptDisabled?: boolean;
-  exportLabel: string;
   onExport: () => void;
-  importLabel: string;
   onImport: () => void;
   actionsDisabled?: boolean;
-  closeLabel: string;
   onClose: () => void;
 };
 
 export function ModalHeader({
-  title,
   titleId,
-  openGroupingPromptLabel,
   onOpenGroupingPrompt,
   groupingPromptDisabled,
-  exportLabel,
   onExport,
-  importLabel,
   onImport,
   actionsDisabled,
-  closeLabel,
   onClose,
 }: ModalHeaderProps) {
+  const title = t("manageGroups");
+  const exportLabel = t("exportGroups");
+  const importLabel = t("importGroups");
+  const openGroupingPromptLabel = t("openGroupingPrompt");
+  const closeLabel = t("close");
+
   return (
     <div className="YouBunch-modal-header">
       <h2 id={titleId} className="YouBunch-modal-title">

@@ -12,7 +12,7 @@ import { useCollapsedGroupsPersistence } from "./hooks/useCollapsedGroups";
 import { useGroups } from "./hooks/useGroups";
 import { useSubscriptions } from "./hooks/useSubscriptions";
 import { ensureShadowMount } from "./mount";
-import { t } from "./i18n";
+import { t, useLanguageSync } from "./i18n";
 import { isSubscriptionSortMode, sortSubscriptions } from "./services/sort-subscriptions";
 import { loadSubscriptionSort, type SubscriptionSortMode } from "./services/subscription-sort";
 
@@ -46,6 +46,7 @@ function GuideGroupsButton({ onClick }: GuideGroupsButtonProps) {
 }
 
 function GuideGroupsSection() {
+  useLanguageSync();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sortMode, setSortMode] = useState<SubscriptionSortMode>("relevance");
   const [currentPathname, setCurrentPathname] = useState(getCurrentPathname);
@@ -185,17 +186,11 @@ function GuideGroupsSection() {
                 currentPathname={currentPathname}
                 isCollapsed={collapsedGroupIds.has(group.id)}
                 onToggleCollapsed={() => handleToggleCollapsed(group.id)}
-                labels={{
-                  emptyLabel: t("groupEmpty"),
-                  expandLabel: t("expandGroup"),
-                  collapseLabel: t("collapseGroup"),
-                }}
                 newnessMap={newnessMap}
                 onChannelSeen={markSeen}
               />
             ))}
             <GuideSubscriptionList
-              title={t("ungroupedSubscriptions")}
               currentPathname={currentPathname}
               subscriptions={ungroupedSubscriptions}
               newnessMap={newnessMap}

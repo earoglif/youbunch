@@ -1,12 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import type { ChannelId, IGroup, ISubscription } from "../../shared/types";
+import { t } from "../i18n";
 import { GuideSubscriptionItem } from "./GuideSubscriptionItem";
-
-type GuideGroupItemLabels = {
-  emptyLabel: string;
-  expandLabel: string;
-  collapseLabel: string;
-};
 
 type GuideGroupItemProps = {
   group: IGroup;
@@ -14,7 +9,6 @@ type GuideGroupItemProps = {
   currentPathname: string;
   isCollapsed: boolean;
   onToggleCollapsed: () => void;
-  labels: GuideGroupItemLabels;
   newnessMap?: Map<ChannelId, boolean>;
   onChannelSeen?: (channelId: ChannelId) => void;
 };
@@ -25,7 +19,6 @@ export function GuideGroupItem({
   currentPathname,
   isCollapsed,
   onToggleCollapsed,
-  labels,
   newnessMap,
   onChannelSeen,
 }: GuideGroupItemProps) {
@@ -35,7 +28,7 @@ export function GuideGroupItem({
         type="button"
         className="guide-group-header"
         onClick={onToggleCollapsed}
-        aria-label={isCollapsed ? labels.expandLabel : labels.collapseLabel}
+        aria-label={isCollapsed ? t("expandGroup") : t("collapseGroup")}
       >
         <ChevronDown
           size={18}
@@ -61,7 +54,7 @@ export function GuideGroupItem({
               />
             ))
           ) : (
-            <p className="guide-empty-text">{labels.emptyLabel}</p>
+            <p className="guide-empty-text">{t("groupEmpty")}</p>
           )}
         </div>
       ) : null}

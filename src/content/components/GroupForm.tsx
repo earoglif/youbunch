@@ -1,5 +1,6 @@
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { DEFAULT_GROUP_COLOR, sanitizeColor } from "../../shared/groups";
+import { t } from "../i18n";
 import { ShadcnColorPicker } from "./ShadcnColorPicker";
 
 export type GroupFormValues = {
@@ -7,31 +8,22 @@ export type GroupFormValues = {
   color: string;
 };
 
-export type GroupFormLabels = {
-  namePlaceholder: string;
-  colorPickerLabel: string;
-  createLabel: string;
-  saveLabel: string;
-  cancelLabel: string;
-};
-
 type GroupFormProps = {
   mode: "create" | "edit";
-  labels: GroupFormLabels;
   initialName?: string;
   initialColor?: string;
   onSubmit: (values: GroupFormValues) => Promise<void> | void;
   onCancel: () => void;
 };
 
-export function GroupForm({ mode, labels, initialName, initialColor, onSubmit, onCancel }: GroupFormProps) {
+export function GroupForm({ mode, initialName, initialColor, onSubmit, onCancel }: GroupFormProps) {
   const [name, setName] = useState(initialName ?? "");
   const [color, setColor] = useState(() =>
     initialColor !== undefined ? sanitizeColor(initialColor) : DEFAULT_GROUP_COLOR
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submitLabel = useMemo(() => (mode === "create" ? labels.createLabel : labels.saveLabel), [labels, mode]);
+  const submitLabel = mode === "create" ? t("createGroupAction") : t("save");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,13 +45,13 @@ export function GroupForm({ mode, labels, initialName, initialColor, onSubmit, o
           value={color}
           onChange={setColor}
           disabled={isSubmitting}
-          aria-label={labels.colorPickerLabel}
+          aria-label={t("groupColorPicker")}
         />
         <input
           className="YouBunch-input YouBunch-group-form-name-input"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          placeholder={labels.namePlaceholder}
+          placeholder={t("groupNamePlaceholder")}
           maxLength={40}
         />
       </div>
@@ -68,7 +60,7 @@ export function GroupForm({ mode, labels, initialName, initialColor, onSubmit, o
           {submitLabel}
         </button>
         <button type="button" className="YouBunch-button" onClick={onCancel} disabled={isSubmitting}>
-          {labels.cancelLabel}
+          {t("cancel")}
         </button>
       </div>
     </form>

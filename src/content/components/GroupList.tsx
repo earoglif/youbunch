@@ -1,7 +1,6 @@
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import type { IGroup, ISubscription } from "../../shared/types";
-import { type GroupFormLabels } from "./GroupForm";
-import { GroupCard, type GroupCardLabels } from "./GroupCard";
+import { GroupCard } from "./GroupCard";
 import { getGroupDragId } from "./dnd";
 
 type GroupListProps = {
@@ -9,8 +8,6 @@ type GroupListProps = {
   subscriptionsByGroupId: Map<string, ISubscription[]>;
   collapsedGroupIds: ReadonlySet<string>;
   onToggleGroupCollapsed: (groupId: string) => void;
-  labels: GroupCardLabels;
-  formLabels: GroupFormLabels;
   onDeleteGroup: (groupId: string) => Promise<void> | void;
   onUpdateGroup: (groupId: string, values: { name: string; color: string }) => Promise<void> | void;
 };
@@ -20,8 +17,6 @@ export function GroupList({
   subscriptionsByGroupId,
   collapsedGroupIds,
   onToggleGroupCollapsed,
-  labels,
-  formLabels,
   onDeleteGroup,
   onUpdateGroup,
 }: GroupListProps) {
@@ -35,8 +30,6 @@ export function GroupList({
             subscriptions={subscriptionsByGroupId.get(group.id) ?? []}
             isCollapsed={collapsedGroupIds.has(group.id)}
             onToggleCollapsed={() => onToggleGroupCollapsed(group.id)}
-            labels={labels}
-            formLabels={formLabels}
             onDelete={onDeleteGroup}
             onUpdate={onUpdateGroup}
           />

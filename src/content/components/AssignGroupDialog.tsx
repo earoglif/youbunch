@@ -1,6 +1,7 @@
 import { type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useEffect, useState } from "react";
 import { DiamondPlus, X } from "lucide-react";
 import type { ChannelId, GroupId, IGroup } from "../../shared/types";
+import { t } from "../i18n";
 import { GroupForm } from "./GroupForm";
 
 const DIALOG_TITLE_ID = "YouBunch-assign-group-dialog-title";
@@ -11,23 +12,9 @@ export type SubscribedChannelInfo = {
   thumbnailUrl?: string;
 };
 
-export type AssignGroupDialogLabels = {
-  title: string;
-  description: string;
-  skipLabel: string;
-  closeLabel: string;
-  createNewGroupLabel: string;
-  createNamePlaceholder: string;
-  colorPickerLabel: string;
-  createLabel: string;
-  saveLabel: string;
-  cancelLabel: string;
-};
-
 type AssignGroupDialogProps = {
   channel: SubscribedChannelInfo;
   groups: IGroup[];
-  labels: AssignGroupDialogLabels;
   onAssignToExisting: (groupId: GroupId) => Promise<void> | void;
   onCreateAndAssign: (values: { name: string; color: string }) => Promise<void> | void;
   onClose: () => void;
@@ -36,7 +23,6 @@ type AssignGroupDialogProps = {
 export function AssignGroupDialog({
   channel,
   groups,
-  labels,
   onAssignToExisting,
   onCreateAndAssign,
   onClose,
@@ -110,12 +96,12 @@ export function AssignGroupDialog({
       >
         <div className="YouBunch-modal-header">
           <h2 id={DIALOG_TITLE_ID} className="YouBunch-modal-title">
-            {labels.title}
+            {t("assignGroupTitle")}
           </h2>
           <div className="YouBunch-modal-header-actions">
             <button
               type="button"
-              aria-label={labels.closeLabel}
+              aria-label={t("close")}
               className="YouBunch-icon-button"
               onClick={onClose}
               disabled={isBusy}
@@ -137,7 +123,7 @@ export function AssignGroupDialog({
             </span>
           </div>
 
-          <p className="YouBunch-assign-description">{labels.description}</p>
+          <p className="YouBunch-assign-description">{t("assignGroupDescription")}</p>
 
           {groups.length > 0 ? (
             <div className="YouBunch-assign-group-list">
@@ -165,13 +151,6 @@ export function AssignGroupDialog({
           {isCreateOpen ? (
             <GroupForm
               mode="create"
-              labels={{
-                namePlaceholder: labels.createNamePlaceholder,
-                colorPickerLabel: labels.colorPickerLabel,
-                createLabel: labels.createLabel,
-                saveLabel: labels.saveLabel,
-                cancelLabel: labels.cancelLabel,
-              }}
               onCancel={() => {
                 if (groups.length > 0) setIsCreateOpen(false);
                 else onClose();
@@ -186,7 +165,7 @@ export function AssignGroupDialog({
               disabled={isBusy}
             >
               <DiamondPlus size={18} strokeWidth={2} aria-hidden="true" />
-              {labels.createNewGroupLabel}
+              {t("assignCreateNewGroupLabel")}
             </button>
           )}
 
@@ -197,7 +176,7 @@ export function AssignGroupDialog({
               onClick={onClose}
               disabled={isBusy}
             >
-              {labels.skipLabel}
+              {t("assignSkipLabel")}
             </button>
           </div>
         </div>
