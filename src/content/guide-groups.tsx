@@ -206,46 +206,6 @@ function GuideGroupsSection() {
       </div>
       <GroupsModal
         isOpen={isModalOpen}
-        title={t("manageGroups")}
-        labels={{
-          closeLabel: t("close"),
-          newGroupLabel: t("newGroup"),
-          exportLabel: t("exportGroups"),
-          importLabel: t("importGroups"),
-          sortLabel: t("sortSubscriptions"),
-          sortRelevanceLabel: t("sortRelevance"),
-          sortNameAscLabel: t("sortNameAsc"),
-          sortNameDescLabel: t("sortNameDesc"),
-          loadingLabel: t("loading"),
-          retryLabel: t("retry"),
-          subscriptionsErrorLabel: t("subscriptionsError"),
-          noGroupsLabel: t("noGroups"),
-          ungroupedTitle: t("ungroupedSubscriptions"),
-          ungroupedEmptyLabel: t("ungroupedEmpty"),
-          groupEmptyLabel: t("groupEmpty"),
-          groupEditLabel: t("edit"),
-          groupDeleteLabel: t("delete"),
-          groupExpandLabel: t("expandGroup"),
-          groupCollapseLabel: t("collapseGroup"),
-          expandAllGroupsLabel: t("expandAllGroups"),
-          collapseAllGroupsLabel: t("collapseAllGroups"),
-          groupDragHandleLabel: t("dragGroup"),
-          subscriptionDragHandleLabel: t("dragSubscription"),
-          createNamePlaceholder: t("groupNamePlaceholder"),
-          groupColorPickerLabel: t("groupColorPicker"),
-          createLabel: t("createGroupAction"),
-          saveLabel: t("save"),
-          cancelLabel: t("cancel"),
-          deleteGroupConfirm: t("deleteGroupConfirm"),
-          openGroupingPromptLabel: t("openGroupingPrompt"),
-          promptDialogTitle: t("groupingPromptTitle"),
-          promptDialogDescription: t("groupingPromptDescription"),
-          promptDialogCloseLabel: t("close"),
-          promptDialogCopyLabel: t("copyPrompt"),
-          promptDialogCopiedLabel: t("copiedPrompt"),
-          promptDialogCopyErrorLabel: t("copyPromptError"),
-          promptDialogFieldLabel: t("groupingPromptField"),
-        }}
         onClose={() => setIsModalOpen(false)}
       />
     </div>

@@ -5,6 +5,7 @@ import { notify } from "../shared/services/notifications";
 import modalStyles from "./groups-modal.css?inline";
 import { ModalBody, type ModalBodyHandle, type ModalBodyLabels } from "./components/ModalBody";
 import { ModalHeader } from "./components/ModalHeader";
+import { t } from "./i18n";
 import { ensureShadowMount } from "./mount";
 import { ModalPortalContainerContext } from "./modal-portal-context";
 import { useSubscriptions } from "./hooks/useSubscriptions";
@@ -14,8 +15,7 @@ const MODAL_TITLE_ID = "YouBunch-manage-groups-modal-title";
 const MODAL_HOST_ID = "YouBunch-modal-host";
 const MODAL_ROOT_ID = "YouBunch-modal-root";
 const MODAL_STYLE_ID = "YouBunch-modal-styles";
-
-export type GroupsModalLabels = ModalBodyLabels & {
+type GroupsModalLabels = ModalBodyLabels & {
   closeLabel: string;
   exportLabel: string;
   importLabel: string;
@@ -23,8 +23,6 @@ export type GroupsModalLabels = ModalBodyLabels & {
 
 type GroupsModalProps = {
   isOpen: boolean;
-  title: string;
-  labels: GroupsModalLabels;
   onClose: () => void;
 };
 
@@ -174,8 +172,48 @@ function ensureModalRoot(): HTMLElement {
   });
 }
 
-export function GroupsModal({ isOpen, title, labels, onClose }: GroupsModalProps) {
+export function GroupsModal({ isOpen, onClose }: GroupsModalProps) {
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+  const title = t("manageGroups");
+  const labels: GroupsModalLabels = {
+    closeLabel: t("close"),
+    newGroupLabel: t("newGroup"),
+    exportLabel: t("exportGroups"),
+    importLabel: t("importGroups"),
+    sortLabel: t("sortSubscriptions"),
+    sortRelevanceLabel: t("sortRelevance"),
+    sortNameAscLabel: t("sortNameAsc"),
+    sortNameDescLabel: t("sortNameDesc"),
+    loadingLabel: t("loading"),
+    retryLabel: t("retry"),
+    subscriptionsErrorLabel: t("subscriptionsError"),
+    noGroupsLabel: t("noGroups"),
+    ungroupedTitle: t("ungroupedSubscriptions"),
+    ungroupedEmptyLabel: t("ungroupedEmpty"),
+    groupEmptyLabel: t("groupEmpty"),
+    groupEditLabel: t("edit"),
+    groupDeleteLabel: t("delete"),
+    groupExpandLabel: t("expandGroup"),
+    groupCollapseLabel: t("collapseGroup"),
+    expandAllGroupsLabel: t("expandAllGroups"),
+    collapseAllGroupsLabel: t("collapseAllGroups"),
+    groupDragHandleLabel: t("dragGroup"),
+    subscriptionDragHandleLabel: t("dragSubscription"),
+    createNamePlaceholder: t("groupNamePlaceholder"),
+    groupColorPickerLabel: t("groupColorPicker"),
+    createLabel: t("createGroupAction"),
+    saveLabel: t("save"),
+    cancelLabel: t("cancel"),
+    deleteGroupConfirm: t("deleteGroupConfirm"),
+    openGroupingPromptLabel: t("openGroupingPrompt"),
+    promptDialogTitle: t("groupingPromptTitle"),
+    promptDialogDescription: t("groupingPromptDescription"),
+    promptDialogCloseLabel: t("close"),
+    promptDialogCopyLabel: t("copyPrompt"),
+    promptDialogCopiedLabel: t("copiedPrompt"),
+    promptDialogCopyErrorLabel: t("copyPromptError"),
+    promptDialogFieldLabel: t("groupingPromptField"),
+  };
 
   useEffect(() => {
     if (!isOpen) return;
