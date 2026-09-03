@@ -39,7 +39,7 @@
   "exportError": "Failed to export JSON file.",
   "openGroupingPrompt": "AI Chat Prompt",
   "groupingPromptTitle": "AI Chat Grouping Prompt",
-  "groupingPromptDescription": "Copy this prompt and paste it into any AI chat.",
+  "groupingPromptDescription": "Copy this prompt and paste it into any AI chat. Then save the reply as a .json file and load it back with Import groups.",
   "copyPrompt": "Copy Prompt",
   "copiedPrompt": "Copied",
   "copyPromptError": "Failed to copy prompt.",

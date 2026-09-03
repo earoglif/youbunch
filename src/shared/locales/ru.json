@@ -39,7 +39,7 @@
   "exportError": "Не удалось экспортировать JSON-файл.",
   "openGroupingPrompt": "Промпт для AI-чата",
   "groupingPromptTitle": "Промпт группировки для AI-чата",
-  "groupingPromptDescription": "Скопируйте этот промпт и вставьте в любой AI-чат.",
+  "groupingPromptDescription": "Скопируйте промпт и вставьте в любой AI-чат. Затем сохраните ответ в файл .json и загрузите его через «Импорт групп».",
   "copyPrompt": "Скопировать промпт",
   "copiedPrompt": "Скопировано",
   "copyPromptError": "Не удалось скопировать промпт.",
