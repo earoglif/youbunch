@@ -6,7 +6,7 @@ const EXTENSION_PUBLIC_KEY =
 export function createManifest(googleClientId: string, includeKey = true) {
   return defineManifest({
     name: '__MSG_extName__',
-    version: '0.1.0',
+    version: '1.0.0',
     manifest_version: 3,
     ...(includeKey ? { key: EXTENSION_PUBLIC_KEY } : {}),
     default_locale: 'en',
