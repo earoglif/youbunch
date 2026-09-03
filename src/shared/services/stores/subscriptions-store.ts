@@ -64,7 +64,14 @@ async function loadSubscriptions(): Promise<void> {
   try {
     const subscriptions = await sendMessage("get-subscriptions", {});
     if (loadId !== latestLoadId) return;
-    setSnapshot({ subscriptions: normalizeSubscriptions(subscriptions), status: "ready" });
+
+    const remote = normalizeSubscriptions(subscriptions);
+    const remoteIds = new Set(remote.map((item) => item.channelId));
+    const pendingLocal = snapshot.subscriptions.filter((item) => !remoteIds.has(item.channelId));
+    setSnapshot({
+      subscriptions: pendingLocal.length > 0 ? [...pendingLocal, ...remote] : remote,
+      status: "ready",
+    });
   } catch (error: unknown) {
     if (loadId !== latestLoadId) return;
     console.error("Failed to request subscriptions", error);
@@ -110,7 +117,7 @@ export function upsertSubscription(subscription: ISubscription): void {
 
   const existingIndex = snapshot.subscriptions.findIndex((item) => item.channelId === channelId);
   if (existingIndex < 0) {
-    setSnapshot({ subscriptions: [...snapshot.subscriptions, nextItem] });
+    setSnapshot({ subscriptions: [nextItem, ...snapshot.subscriptions] });
     return;
   }
 

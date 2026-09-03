@@ -43,6 +43,7 @@ function SubscribeAssignRoot() {
             name: resolved.name,
             thumbnailUrl: resolved.thumbnailUrl,
           });
+          requestSubscriptions();
 
           logger.debug(`${DEBUG_PREFIX} set pending channel`, subscription, resolved);
           setPendingChannel(resolved);
@@ -53,6 +54,7 @@ function SubscribeAssignRoot() {
             channelId: fallbackInfo.channelId,
             name: fallbackInfo.name,
           });
+          requestSubscriptions();
           logger.debug(`${DEBUG_PREFIX} set pending channel (fallback)`, fallbackInfo);
           setPendingChannel(fallbackInfo);
         });
