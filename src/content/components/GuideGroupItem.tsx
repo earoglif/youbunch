@@ -1,9 +1,10 @@
 import { ChevronDown } from "lucide-react";
+import type { FC } from "react";
 import type { ChannelId, IGroup, ISubscription } from "../../shared/types";
 import { t } from "../i18n";
 import { GuideSubscriptionItem } from "./GuideSubscriptionItem";
 
-type GuideGroupItemProps = {
+interface IGuideGroupItemProps {
   group: IGroup;
   subscriptions: ISubscription[];
   currentPathname: string;
@@ -11,9 +12,9 @@ type GuideGroupItemProps = {
   onToggleCollapsed: () => void;
   newnessMap?: Map<ChannelId, boolean>;
   onChannelSeen?: (channelId: ChannelId) => void;
-};
+}
 
-export function GuideGroupItem({
+export const GuideGroupItem: FC<IGuideGroupItemProps> = ({
   group,
   subscriptions,
   currentPathname,
@@ -21,7 +22,7 @@ export function GuideGroupItem({
   onToggleCollapsed,
   newnessMap,
   onChannelSeen,
-}: GuideGroupItemProps) {
+}) => {
   return (
     <section className="guide-group">
       <button
@@ -60,4 +61,4 @@ export function GuideGroupItem({
       ) : null}
     </section>
   );
-}
+};

@@ -2,30 +2,30 @@ import { useDndContext } from "@dnd-kit/core";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { type FC, useState } from "react";
 import type { IGroup, ISubscription } from "../../shared/types";
 import { t } from "../i18n";
 import { GroupForm } from "./GroupForm";
 import { SubscriptionItem } from "./SubscriptionItem";
 import { type GroupDragData, getGroupDragId } from "./dnd";
 
-type GroupCardProps = {
+interface IGroupCardProps {
   group: IGroup;
   subscriptions: ISubscription[];
   isCollapsed: boolean;
   onToggleCollapsed: () => void;
   onDelete: (groupId: string) => Promise<void> | void;
   onUpdate: (groupId: string, values: { name: string; color: string }) => Promise<void> | void;
-};
+}
 
-export function GroupCard({
+export const GroupCard: FC<IGroupCardProps> = ({
   group,
   subscriptions,
   isCollapsed,
   onToggleCollapsed,
   onDelete,
   onUpdate,
-}: GroupCardProps) {
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const { active } = useDndContext();
 
@@ -130,4 +130,4 @@ export function GroupCard({
       ) : null}
     </article>
   );
-}
+};

@@ -1,20 +1,21 @@
+import type { FC } from "react";
 import type { ChannelId, ISubscription } from "../../shared/types";
 import { t } from "../i18n";
 import { GuideSubscriptionItem } from "./GuideSubscriptionItem";
 
-type GuideSubscriptionListProps = {
+interface IGuideSubscriptionListProps {
   currentPathname: string;
   subscriptions: ISubscription[];
   newnessMap?: Map<ChannelId, boolean>;
   onChannelSeen?: (channelId: ChannelId) => void;
-};
+}
 
-export function GuideSubscriptionList({
+export const GuideSubscriptionList: FC<IGuideSubscriptionListProps> = ({
   currentPathname,
   subscriptions,
   newnessMap,
   onChannelSeen,
-}: GuideSubscriptionListProps) {
+}) => {
   if (subscriptions.length === 0) return null;
 
   return (
@@ -33,4 +34,4 @@ export function GuideSubscriptionList({
       </div>
     </section>
   );
-}
+};

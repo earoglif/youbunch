@@ -1,14 +1,15 @@
 import { useDndContext, useDroppable } from "@dnd-kit/core";
+import type { FC } from "react";
 import type { ISubscription } from "../../shared/types";
 import { t } from "../i18n";
 import { SubscriptionItem } from "./SubscriptionItem";
 import { UNGROUPED_DROP_ID } from "./dnd";
 
-type SubscriptionListProps = {
+interface ISubscriptionListProps {
   subscriptions: ISubscription[];
-};
+}
 
-export function SubscriptionList({ subscriptions }: SubscriptionListProps) {
+export const SubscriptionList: FC<ISubscriptionListProps> = ({ subscriptions }) => {
   const { active } = useDndContext();
   const { setNodeRef, isOver } = useDroppable({
     id: UNGROUPED_DROP_ID,
@@ -34,4 +35,4 @@ export function SubscriptionList({ subscriptions }: SubscriptionListProps) {
       </div>
     </section>
   );
-}
+};

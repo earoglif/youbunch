@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from "react";
+import { type FC, type FormEvent, useState } from "react";
 import { DEFAULT_GROUP_COLOR, sanitizeColor } from "../../shared/groups";
 import { t } from "../i18n";
 import { ShadcnColorPicker } from "./ShadcnColorPicker";
@@ -8,15 +8,15 @@ export type GroupFormValues = {
   color: string;
 };
 
-type GroupFormProps = {
+interface IGroupFormProps {
   mode: "create" | "edit";
   initialName?: string;
   initialColor?: string;
   onSubmit: (values: GroupFormValues) => Promise<void> | void;
   onCancel: () => void;
-};
+}
 
-export function GroupForm({ mode, initialName, initialColor, onSubmit, onCancel }: GroupFormProps) {
+export const GroupForm: FC<IGroupFormProps> = ({ mode, initialName, initialColor, onSubmit, onCancel }) => {
   const [name, setName] = useState(initialName ?? "");
   const [color, setColor] = useState(() =>
     initialColor !== undefined ? sanitizeColor(initialColor) : DEFAULT_GROUP_COLOR
@@ -65,4 +65,4 @@ export function GroupForm({ mode, initialName, initialColor, onSubmit, onCancel 
       </div>
     </form>
   );
-}
+};

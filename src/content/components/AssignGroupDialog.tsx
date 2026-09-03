@@ -1,4 +1,4 @@
-import { type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useEffect, useState } from "react";
+import { type FC, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useEffect, useState } from "react";
 import { DiamondPlus, X } from "lucide-react";
 import type { ChannelId, GroupId, IGroup } from "../../shared/types";
 import { t } from "../i18n";
@@ -12,21 +12,21 @@ export type SubscribedChannelInfo = {
   thumbnailUrl?: string;
 };
 
-type AssignGroupDialogProps = {
+interface IAssignGroupDialogProps {
   channel: SubscribedChannelInfo;
   groups: IGroup[];
   onAssignToExisting: (groupId: GroupId) => Promise<void> | void;
   onCreateAndAssign: (values: { name: string; color: string }) => Promise<void> | void;
   onClose: () => void;
-};
+}
 
-export function AssignGroupDialog({
+export const AssignGroupDialog: FC<IAssignGroupDialogProps> = ({
   channel,
   groups,
   onAssignToExisting,
   onCreateAndAssign,
   onClose,
-}: AssignGroupDialogProps) {
+}) => {
   const [isCreateOpen, setIsCreateOpen] = useState(groups.length === 0);
   const [isBusy, setIsBusy] = useState(false);
 
@@ -183,4 +183,4 @@ export function AssignGroupDialog({
       </div>
     </div>
   );
-}
+};

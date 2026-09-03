@@ -1,14 +1,14 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { type FC, useContext, useEffect, useMemo, useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover";
 import { ModalPortalContainerContext } from "../modal-portal-context";
 
-type ShadcnColorPickerProps = {
+interface IShadcnColorPickerProps {
   value: string;
   onChange: (value: string) => void;
   disabled?: boolean;
   "aria-label": string;
-};
+}
 
 function normalizeHexKeyInput(raw: string): string {
   let s = raw.trim();
@@ -22,7 +22,7 @@ function normalizeHexKeyInput(raw: string): string {
   return `#${body}`;
 }
 
-export function ShadcnColorPicker({ value, onChange, disabled, "aria-label": ariaLabel }: ShadcnColorPickerProps) {
+export const ShadcnColorPicker: FC<IShadcnColorPickerProps> = ({ value, onChange, disabled, "aria-label": ariaLabel }) => {
   const portalContainer = useContext(ModalPortalContainerContext);
   const [open, setOpen] = useState(false);
   const [hexDraft, setHexDraft] = useState(value);
@@ -75,4 +75,4 @@ export function ShadcnColorPicker({ value, onChange, disabled, "aria-label": ari
       </PopoverContent>
     </Popover>
   );
-}
+};

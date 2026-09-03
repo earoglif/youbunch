@@ -20,18 +20,18 @@ import { GroupingPromptDialog } from "./GroupingPromptDialog";
 import { GroupList } from "./GroupList";
 import { SubscriptionList } from "./SubscriptionList";
 
-type ModalBodyProps = {
+interface IModalBodyProps {
   subscriptions: ISubscription[];
   isSubscriptionsLoading: boolean;
   hasSubscriptionsError: boolean;
   onRetrySubscriptions: () => void;
-};
+}
 
 export type ModalBodyHandle = {
   openGroupingPrompt: () => void;
 };
 
-export const ModalBody = forwardRef<ModalBodyHandle, ModalBodyProps>(function ModalBody(
+export const ModalBody = forwardRef<ModalBodyHandle, IModalBodyProps>(function ModalBody(
   { subscriptions, isSubscriptionsLoading, hasSubscriptionsError, onRetrySubscriptions },
   ref
 ) {

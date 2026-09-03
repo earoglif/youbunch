@@ -9,13 +9,13 @@ const PopoverTrigger = React.forwardRef<
 >((props, ref) => <PopoverPrimitive.Trigger ref={ref} type="button" {...props} />);
 PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 
-type PopoverContentProps = React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & {
+interface IPopoverContentProps extends React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> {
   container?: HTMLElement | null;
-};
+}
 
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,
-  PopoverContentProps
+  IPopoverContentProps
 >(({ className, container, align = "start", sideOffset = 6, ...props }, ref) => (
   <PopoverPrimitive.Portal container={container ?? undefined}>
     <PopoverPrimitive.Content

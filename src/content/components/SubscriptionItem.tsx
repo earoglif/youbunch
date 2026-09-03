@@ -1,15 +1,16 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import type { FC } from "react";
 import type { GroupId, ISubscription } from "../../shared/types";
 import { t } from "../i18n";
 import { type SubscriptionDragData, getSubscriptionDragId } from "./dnd";
 
-type SubscriptionItemProps = {
+interface ISubscriptionItemProps {
   subscription: ISubscription;
   groupId: GroupId | null;
-};
+}
 
-export function SubscriptionItem({ subscription, groupId }: SubscriptionItemProps) {
+export const SubscriptionItem: FC<ISubscriptionItemProps> = ({ subscription, groupId }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: getSubscriptionDragId(subscription.channelId),
     data: {
@@ -44,4 +45,4 @@ export function SubscriptionItem({ subscription, groupId }: SubscriptionItemProp
       <span className="YouBunch-subscription-name">{subscription.name}</span>
     </div>
   );
-}
+};

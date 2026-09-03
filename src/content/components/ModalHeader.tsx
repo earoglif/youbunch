@@ -1,7 +1,8 @@
 import { BotMessageSquare, Download, Upload, X } from "lucide-react";
+import type { FC } from "react";
 import { t } from "../i18n";
 
-type ModalHeaderProps = {
+interface IModalHeaderProps {
   titleId?: string;
   onOpenGroupingPrompt: () => void;
   groupingPromptDisabled?: boolean;
@@ -9,9 +10,9 @@ type ModalHeaderProps = {
   onImport: () => void;
   actionsDisabled?: boolean;
   onClose: () => void;
-};
+}
 
-export function ModalHeader({
+export const ModalHeader: FC<IModalHeaderProps> = ({
   titleId,
   onOpenGroupingPrompt,
   groupingPromptDisabled,
@@ -19,7 +20,7 @@ export function ModalHeader({
   onImport,
   actionsDisabled,
   onClose,
-}: ModalHeaderProps) {
+}) => {
   const title = t("manageGroups");
   const exportLabel = t("exportGroups");
   const importLabel = t("importGroups");
@@ -68,4 +69,4 @@ export function ModalHeader({
       </div>
     </div>
   );
-}
+};

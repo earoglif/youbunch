@@ -1,7 +1,8 @@
+import type { FC } from "react";
 import { handleYouTubeSpaLinkClick } from "../services/yt-navigation";
 import type { ChannelId, ISubscription } from "../../shared/types";
 
-type GuideSubscriptionItemProps = {
+interface IGuideSubscriptionItemProps {
   subscription: ISubscription;
   currentPathname: string;
   hasNewContent?: boolean;
@@ -19,12 +20,12 @@ function isActiveSubscriptionPath(channelId: string, currentPathname: string): b
   return normalizedPathname === channelPath || normalizedPathname.startsWith(`${channelPath}/`);
 }
 
-export function GuideSubscriptionItem({
+export const GuideSubscriptionItem: FC<IGuideSubscriptionItemProps> = ({
   subscription,
   currentPathname,
   hasNewContent,
   onSeen,
-}: GuideSubscriptionItemProps) {
+}) => {
   const isActive = isActiveSubscriptionPath(subscription.channelId, currentPathname);
   const channelUrl = `/channel/${subscription.channelId}`;
 
@@ -59,4 +60,4 @@ export function GuideSubscriptionItem({
       {hasNewContent ? <span className="guide-sub-newness-dot" aria-hidden="true" /> : null}
     </a>
   );
-}
+};

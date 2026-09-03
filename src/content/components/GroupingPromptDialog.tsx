@@ -1,22 +1,22 @@
-import { type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useEffect, useState } from "react";
+import { type FC, type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { t } from "../i18n";
 
 type CopyStatus = "idle" | "copied" | "error";
 
-type GroupingPromptDialogProps = {
+interface IGroupingPromptDialogProps {
   isOpen: boolean;
   prompt: string;
   onClose: () => void;
-};
+}
 
 const PROMPT_DIALOG_TITLE_ID = "YouBunch-grouping-prompt-title";
 
-export function GroupingPromptDialog({
+export const GroupingPromptDialog: FC<IGroupingPromptDialogProps> = ({
   isOpen,
   prompt,
   onClose,
-}: GroupingPromptDialogProps) {
+}) => {
   const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
 
   useEffect(() => {
@@ -100,4 +100,4 @@ export function GroupingPromptDialog({
       </div>
     </div>
   );
-}
+};
